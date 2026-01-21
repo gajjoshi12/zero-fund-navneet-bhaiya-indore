@@ -3308,3 +3308,103 @@ h6 {
     overflow-y: auto;
   }
 }
+
+/* ============================================
+   SMS Style Notifications (Phone-like)
+   ============================================ */
+
+.sms-notifications-container {
+  position: fixed;
+  top: 80px;
+  right: 16px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  max-width: 280px;
+}
+
+.sms-notification {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: translateX(120%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: auto;
+}
+
+.sms-notification.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.sms-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.sms-icon {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #00D9FF, #7B61FF);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sms-icon svg {
+  width: 12px;
+  height: 12px;
+  stroke: white;
+}
+
+.sms-sender {
+  font-weight: 600;
+  font-size: 11px;
+  color: #1a1a2e;
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.sms-time {
+  font-size: 10px;
+  color: #999;
+}
+
+.sms-body p {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #333;
+  margin: 0;
+}
+
+/* Mobile SMS Notifications */
+@media (max-width: 768px) {
+  .sms-notifications-container {
+    top: 70px;
+    right: 10px;
+    left: auto;
+    max-width: 240px;
+  }
+
+  .sms-notification {
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+
+  .sms-body p {
+    font-size: 11px;
+  }
+
+  .sms-sender {
+    font-size: 10px;
+  }
+}

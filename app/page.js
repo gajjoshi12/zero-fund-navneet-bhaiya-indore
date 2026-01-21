@@ -11,6 +11,7 @@ import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
+import SMSNotifications from './components/SMSNotifications';
 
 export default function Home() {
   // Scroll animation observer
@@ -60,6 +61,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
+      <SMSNotifications />
       <main>
         <Hero />
         <Features />
