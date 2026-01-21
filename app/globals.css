@@ -417,6 +417,7 @@ h6 {
   background: none;
   border: none;
   cursor: pointer;
+  z-index: 1001;
 }
 
 .mobile-menu-btn span {
@@ -425,6 +426,20 @@ h6 {
   height: 2px;
   background: var(--text-primary);
   transition: all var(--transition-medium);
+  transform-origin: center;
+}
+
+.mobile-menu-btn.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
 /* ============================================
@@ -2783,9 +2798,38 @@ h6 {
   .earnings-overview {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .table-header,
+  .table-row {
+    grid-template-columns: 1.5fr 2fr 1fr 1fr;
+  }
+
+  .table-header span:nth-child(3),
+  .table-row span:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .dashboard-sidebar {
+    width: 240px;
+    padding: 20px;
+  }
+
+  .dashboard-main {
+    margin-left: 240px;
+    padding: 32px;
+  }
+
+  .sidebar-link {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 768px) {
+
+  /* Dashboard Layout - Mobile */
   .dashboard-page {
     flex-direction: column;
   }
@@ -2798,16 +2842,39 @@ h6 {
     padding: 16px;
   }
 
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .sidebar-header .logo {
+    margin-bottom: 0;
+  }
+
+  .admin-badge {
+    margin-top: 0;
+    margin-left: 12px;
+  }
+
   .sidebar-nav {
     flex-direction: row;
     overflow-x: auto;
-    gap: 4px;
+    gap: 8px;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .sidebar-link {
     flex-shrink: 0;
-    padding: 10px 14px;
+    padding: 10px 16px;
     font-size: 13px;
+    white-space: nowrap;
   }
 
   .sidebar-link svg {
@@ -2820,29 +2887,424 @@ h6 {
 
   .dashboard-main {
     margin-left: 0;
-    padding: 24px;
+    padding: 20px;
+  }
+
+  .dashboard-title {
+    font-size: 24px;
   }
 
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .stat-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .stat-label {
+    font-size: 12px;
   }
 
   .earnings-overview {
     grid-template-columns: 1fr;
   }
 
+  .earnings-card {
+    padding: 24px;
+  }
+
+  .earnings-amount {
+    font-size: 28px;
+  }
+
   .tasks-grid {
     grid-template-columns: 1fr;
   }
 
-  .table-header,
+  .task-card {
+    padding: 20px;
+  }
+
+  .task-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .task-title {
+    margin-right: 0;
+  }
+
+  .task-footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .task-footer .btn {
+    width: 100%;
+  }
+
+  /* Table Mobile */
+  .table-header {
+    display: none;
+  }
+
   .table-row {
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .table-row span {
+    display: block !important;
+  }
+
+  .row-actions {
+    margin-top: 8px;
+    justify-content: flex-start;
+  }
+
+  .users-table,
+  .submissions-table {
+    padding: 16px;
+  }
+
+  /* Balance Card Mobile */
+  .balance-card {
+    padding: 24px;
+  }
+
+  .balance-amount .currency {
+    font-size: 24px;
+  }
+
+  .balance-amount .amount {
+    font-size: 40px;
+  }
+
+  /* Withdrawal Form Mobile */
+  .withdrawal-form {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  /* Auth Pages Mobile */
+  .auth-card {
+    padding: 32px 24px;
+  }
+
+  .auth-header h1 {
+    font-size: 24px;
+  }
+
+  .demo-credentials {
+    padding: 16px;
+  }
+
+  .demo-info {
     font-size: 12px;
   }
 
-  .table-header span:nth-child(n+3),
-  .table-row span:nth-child(n+3) {
-    display: none;
+  /* Submit Page Mobile */
+  .submit-card {
+    padding: 24px;
+  }
+
+  .submit-header h1 {
+    font-size: 24px;
+  }
+
+  .file-label {
+    padding: 24px;
+  }
+
+  .submit-actions {
+    flex-direction: column;
+  }
+
+  .submit-actions .btn {
+    width: 100%;
+  }
+
+  /* Admin Task Card Mobile */
+  .admin-task-card {
+    padding: 20px;
+  }
+
+  .task-actions {
+    flex-direction: column;
+  }
+
+  .task-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Submission Card Mobile */
+  .submission-card {
+    padding: 20px;
+  }
+
+  .submission-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .submission-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .submission-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Modal Mobile */
+  .modal-overlay {
+    padding: 16px;
+    align-items: flex-end;
+  }
+
+  .modal {
+    padding: 24px;
+    max-height: 85vh;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .modal-header h2 {
+    font-size: 18px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-actions .btn {
+    width: 100%;
+  }
+
+  /* Dashboard Header Row Mobile */
+  .dashboard-header-row {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .dashboard-header-row .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* Extra Small Screens */
+  .dashboard-main {
+    padding: 16px;
+  }
+
+  .dashboard-title {
+    font-size: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .balance-amount .amount {
+    font-size: 32px;
+  }
+
+  .task-card {
+    padding: 16px;
+  }
+
+  .task-title {
+    font-size: 16px;
+  }
+
+  .task-reward {
+    font-size: 16px;
+  }
+
+  .auth-container {
+    padding: 0;
+  }
+
+  .auth-card {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .auth-header h1 {
+    font-size: 22px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .btn-lg {
+    padding: 14px 24px;
+  }
+
+  .sidebar-link {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .empty-state {
+    padding: 40px 20px;
+  }
+
+  .empty-state svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .empty-state h3 {
+    font-size: 18px;
+  }
+}
+
+/* Mobile Navigation Menu */
+.mobile-nav-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-primary);
+  z-index: 999;
+  padding: 80px 24px 24px;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-nav-menu.active {
+  display: flex;
+}
+
+.mobile-nav-menu .nav-link {
+  padding: 16px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+
+.mobile-nav-menu .nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav-menu .nav-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.mobile-nav-menu .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .btn {
+    min-height: 48px;
+  }
+
+  .sidebar-link {
+    min-height: 44px;
+  }
+
+  .faq-question {
+    min-height: 56px;
+  }
+
+  .nav-link {
+    padding: 12px 8px;
+  }
+
+  .task-status {
+    padding: 8px 14px;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .dashboard-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+
+  .dashboard-main {
+    padding-top: 100px;
+  }
+
+  .auth-page {
+    padding: 20px;
+  }
+
+  .auth-card {
+    max-height: 90vh;
+    overflow-y: auto;
   }
 }
