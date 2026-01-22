@@ -2651,6 +2651,22 @@ h6 {
   color: #ff6464;
 }
 
+.dashboard-toggle {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .submission-task {
   margin-bottom: 16px;
 }
@@ -2840,55 +2856,81 @@ h6 {
     border-right: none;
     border-bottom: 1px solid var(--border-glass);
     padding: 16px;
+    z-index: 1000;
+  }
+
+  .dashboard-sidebar.mobile-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    border-bottom: none;
+    background: rgba(13, 13, 18, 0.98);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
   }
 
   .sidebar-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 0;
   }
 
   .sidebar-header .logo {
     margin-bottom: 0;
   }
 
-  .admin-badge {
-    margin-top: 0;
-    margin-left: 12px;
+  .dashboard-toggle {
+    display: flex;
+  }
+
+  .sidebar-content-wrapper {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 32px;
+  }
+
+  .dashboard-sidebar.mobile-open .sidebar-content-wrapper {
+    display: flex;
+    animation: fadeIn 0.3s ease-out;
   }
 
   .sidebar-nav {
-    flex-direction: row;
-    overflow-x: auto;
+    flex-direction: column;
     gap: 8px;
-    padding-bottom: 8px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .sidebar-nav::-webkit-scrollbar {
-    display: none;
+    padding-bottom: 20px;
+    overflow-y: auto;
   }
 
   .sidebar-link {
-    flex-shrink: 0;
-    padding: 10px 16px;
-    font-size: 13px;
-    white-space: nowrap;
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    justify-content: flex-start;
   }
 
   .sidebar-link svg {
-    display: none;
+    display: block;
   }
 
   .sidebar-footer {
-    display: none;
+    display: flex;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-glass);
   }
 
   .dashboard-main {
     margin-left: 0;
-    padding: 20px;
+    padding: 24px;
+    padding-top: 32px;
   }
+
+
 
   .dashboard-title {
     font-size: 24px;
@@ -3004,6 +3046,137 @@ h6 {
     flex-direction: column;
     max-width: 100%;
   }
+
+
+  /* Trading Action Cards (Mobile) */
+  .trading-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   Premium Trading Cards
+   ============================================ */
+
+.trading-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.trading-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.trading-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+.trading-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.trading-card.register {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(0, 217, 255, 0.01) 100%);
+}
+
+.trading-card.register:hover {
+  box-shadow: 0 10px 40px -10px rgba(0, 217, 255, 0.2);
+  border-color: rgba(0, 217, 255, 0.3);
+}
+
+.trading-card.login {
+  background: linear-gradient(135deg, rgba(123, 97, 255, 0.05) 0%, rgba(123, 97, 255, 0.01) 100%);
+}
+
+.trading-card.login:hover {
+  box-shadow: 0 10px 40px -10px rgba(123, 97, 255, 0.2);
+  border-color: rgba(123, 97, 255, 0.3);
+}
+
+.trading-card-content {
+  position: relative;
+  z-index: 1;
+}
+
+.trading-card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  transition: transform 0.3s ease;
+}
+
+.trading-card.register .trading-card-icon {
+  background: rgba(0, 217, 255, 0.1);
+  color: var(--accent-cyan);
+}
+
+.trading-card.login .trading-card-icon {
+  background: rgba(123, 97, 255, 0.1);
+  color: var(--accent-purple);
+}
+
+.trading-card:hover .trading-card-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.trading-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.trading-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.btn-arrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: gap 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.trading-card.register .btn-arrow {
+  color: var(--accent-cyan);
+}
+
+.trading-card.login .btn-arrow {
+  color: var(--accent-purple);
+}
+
+.trading-card:hover .btn-arrow {
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
 
   /* Auth Pages Mobile */
   .auth-card {

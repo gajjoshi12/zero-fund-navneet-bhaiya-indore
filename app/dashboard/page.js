@@ -13,6 +13,7 @@ export default function DashboardPage() {
     const [assignments, setAssignments] = useState([]);
     const [stats, setStats] = useState(null);
     const [activeTab, setActiveTab] = useState('overview');
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         if (!loading && !user) {
@@ -30,6 +31,12 @@ export default function DashboardPage() {
             loadData();
         }
     }, [user]);
+
+    // Close mobile menu when tab changes
+    const handleTabChange = (tab) => {
+        setActiveTab(tab);
+        setMobileMenuOpen(false);
+    };
 
     const loadData = () => {
         const allTasks = getAllTasks();
@@ -61,7 +68,7 @@ export default function DashboardPage() {
     return (
         <div className="dashboard-page">
             {/* Sidebar */}
-            <aside className="dashboard-sidebar glass-card">
+            <aside className={`dashboard-sidebar glass-card ${mobileMenuOpen ? 'mobile-open' : ''}`}>
                 <div className="sidebar-header">
                     <Link href="/" className="logo">
                         <div className="logo-icon">
@@ -78,70 +85,81 @@ export default function DashboardPage() {
                         </div>
                         <span className="logo-text">TradeFund<span className="logo-highlight">Pro</span></span>
                     </Link>
+
+                    <button
+                        className={`mobile-menu-btn dashboard-toggle ${mobileMenuOpen ? 'active' : ''}`}
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
 
-                <nav className="sidebar-nav">
-                    <button
-                        className={`sidebar-link ${activeTab === 'overview' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('overview')}
-                    >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <rect x="3" y="3" width="7" height="9" />
-                            <rect x="14" y="3" width="7" height="5" />
-                            <rect x="14" y="12" width="7" height="9" />
-                            <rect x="3" y="16" width="7" height="5" />
-                        </svg>
-                        Overview
-                    </button>
-                    <button
-                        className={`sidebar-link ${activeTab === 'tasks' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('tasks')}
-                    >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M9 11l3 3L22 4" />
-                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                        </svg>
-                        Available Tasks
-                    </button>
-                    <button
-                        className={`sidebar-link ${activeTab === 'my-tasks' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('my-tasks')}
-                    >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                            <polyline points="14,2 14,8 20,8" />
-                            <line x1="16" y1="13" x2="8" y2="13" />
-                            <line x1="16" y1="17" x2="8" y2="17" />
-                        </svg>
-                        My Tasks
-                    </button>
-                    <button
-                        className={`sidebar-link ${activeTab === 'earnings' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('earnings')}
-                    >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <line x1="12" y1="1" x2="12" y2="23" />
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                        </svg>
-                        Earnings
-                    </button>
-                </nav>
+                <div className="sidebar-content-wrapper">
+                    <nav className="sidebar-nav">
+                        <button
+                            className={`sidebar-link ${activeTab === 'overview' ? 'active' : ''}`}
+                            onClick={() => handleTabChange('overview')}
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <rect x="3" y="3" width="7" height="9" />
+                                <rect x="14" y="3" width="7" height="5" />
+                                <rect x="14" y="12" width="7" height="9" />
+                                <rect x="3" y="16" width="7" height="5" />
+                            </svg>
+                            Overview
+                        </button>
+                        <button
+                            className={`sidebar-link ${activeTab === 'tasks' ? 'active' : ''}`}
+                            onClick={() => handleTabChange('tasks')}
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M9 11l3 3L22 4" />
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                            </svg>
+                            Available Tasks
+                        </button>
+                        <button
+                            className={`sidebar-link ${activeTab === 'my-tasks' ? 'active' : ''}`}
+                            onClick={() => handleTabChange('my-tasks')}
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14,2 14,8 20,8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                            </svg>
+                            My Tasks
+                        </button>
+                        <button
+                            className={`sidebar-link ${activeTab === 'earnings' ? 'active' : ''}`}
+                            onClick={() => handleTabChange('earnings')}
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <line x1="12" y1="1" x2="12" y2="23" />
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                            </svg>
+                            Earnings
+                        </button>
+                    </nav>
 
-                <div className="sidebar-footer">
-                    <div className="user-info">
-                        <div className="user-avatar">{user.name?.charAt(0) || 'U'}</div>
-                        <div className="user-details">
-                            <span className="user-name">{user.name}</span>
-                            <span className="user-email">{user.email}</span>
+                    <div className="sidebar-footer">
+                        <div className="user-info">
+                            <div className="user-avatar">{user.name?.charAt(0) || 'U'}</div>
+                            <div className="user-details">
+                                <span className="user-name">{user.name}</span>
+                                <span className="user-email">{user.email}</span>
+                            </div>
                         </div>
+                        <button className="btn-logout" onClick={logout}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16,17 21,12 16,7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                        </button>
                     </div>
-                    <button className="btn-logout" onClick={logout}>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                            <polyline points="16,17 21,12 16,7" />
-                            <line x1="21" y1="12" x2="9" y2="12" />
-                        </svg>
-                    </button>
                 </div>
             </aside>
 
@@ -150,6 +168,51 @@ export default function DashboardPage() {
                 {activeTab === 'overview' && (
                     <div className="dashboard-content">
                         <h1 className="dashboard-title">Welcome back, <span className="gradient-text">{user.name}</span>!</h1>
+
+                        <div className="trading-actions-grid">
+                            <a href="https://member.srglobalfx.com/register" target="_blank" rel="noopener noreferrer" className="trading-card register">
+                                <div className="trading-card-content">
+                                    <div className="trading-card-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="8.5" cy="7" r="4"></circle>
+                                            <line x1="20" y1="8" x2="20" y2="14"></line>
+                                            <line x1="23" y1="11" x2="17" y2="11"></line>
+                                        </svg>
+                                    </div>
+                                    <h3>Start Trading Now</h3>
+                                    <p>Register for a new trading account to begin your journey with our advanced platform.</p>
+                                    <span className="btn-arrow">
+                                        Register Now
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </a>
+
+                            <a href="https://member.srglobalfx.com/login" target="_blank" rel="noopener noreferrer" className="trading-card login">
+                                <div className="trading-card-content">
+                                    <div className="trading-card-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                            <polyline points="10 17 15 12 10 7"></polyline>
+                                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                                        </svg>
+                                    </div>
+                                    <h3>Access Trading Dashboard</h3>
+                                    <p>Already have an account? Login to manage your trades and view performance.</p>
+                                    <span className="btn-arrow">
+                                        Login to Trade
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
 
                         <div className="stats-grid">
                             <div className="stat-card glass-card">
