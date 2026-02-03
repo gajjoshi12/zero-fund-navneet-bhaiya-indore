@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../../context/AuthContext';
 
@@ -16,6 +16,8 @@ export default function SignupPage() {
 
     const { signup } = useAuth();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get('redirect');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,7 +38,8 @@ export default function SignupPage() {
         const result = signup(name, email, password, phone);
 
         if (result.success) {
-            router.push('/dashboard');
+            // Redirect to the specified URL or dashboard
+            router.push(redirectUrl || '/dashboard');
         } else {
             setError(result.error);
         }

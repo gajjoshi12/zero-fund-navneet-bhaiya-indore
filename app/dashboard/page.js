@@ -312,12 +312,12 @@ export default function DashboardPage() {
                                                     {assignment.status.replace('_', ' ')}
                                                 </span>
                                             ) : (
-                                                <button
+                                                <Link
+                                                    href={`/dashboard/purchase?size=${encodeURIComponent(task.title)}&price=${task.reward.toLocaleString('en-IN')}&type=challenge&split=80%25`}
                                                     className="btn btn-primary btn-sm"
-                                                    onClick={() => handleClaimTask(task.id)}
                                                 >
                                                     Claim Task
-                                                </button>
+                                                </Link>
                                             )}
                                         </div>
                                     </div>
