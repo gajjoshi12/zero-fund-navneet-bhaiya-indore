@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../../context/AuthContext';
 
-export default function SignupPage() {
+function SignupForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -145,5 +145,38 @@ export default function SignupPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function SignupPage() {
+    return (
+        <Suspense fallback={
+            <div className="auth-page">
+                <div className="auth-container">
+                    <div className="auth-card glass-card">
+                        <div className="auth-header">
+                            <div className="logo">
+                                <div className="logo-icon">
+                                    <svg viewBox="0 0 40 40" fill="none">
+                                        <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" strokeWidth="3" />
+                                        <path d="M12 20L18 26L28 14" stroke="url(#logoGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                        <defs>
+                                            <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
+                                                <stop offset="0%" stopColor="#00D9FF" />
+                                                <stop offset="100%" stopColor="#7B61FF" />
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <span className="logo-text">TradeFund<span className="logo-highlight">Pro</span></span>
+                            </div>
+                            <h1>Loading...</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }>
+            <SignupForm />
+        </Suspense>
     );
 }

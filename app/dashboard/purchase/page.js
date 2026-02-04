@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../../context/AuthContext';
 
-export default function PurchasePage() {
+function PurchaseContent() {
     const { user, loading } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -603,5 +603,43 @@ export default function PurchasePage() {
                 )}
             </div>
         </div>
+    );
+}
+
+function PurchaseLoadingSkeleton() {
+    return (
+        <div className="purchase-page">
+            <div className="bg-gradient-orb"></div>
+            <div className="bg-gradient-orb-2"></div>
+            <div className="bg-grid"></div>
+            <div className="purchase-container">
+                <div className="purchase-header">
+                    <div className="logo">
+                        <div className="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none">
+                                <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" strokeWidth="3" />
+                                <path d="M12 20L18 26L28 14" stroke="url(#logoGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                <defs>
+                                    <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
+                                        <stop offset="0%" stopColor="#00D9FF" />
+                                        <stop offset="100%" stopColor="#7B61FF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <span className="logo-text">TradeFund<span className="logo-highlight">Pro</span></span>
+                    </div>
+                </div>
+                <div className="purchase-loading">Loading...</div>
+            </div>
+        </div>
+    );
+}
+
+export default function PurchasePage() {
+    return (
+        <Suspense fallback={<PurchaseLoadingSkeleton />}>
+            <PurchaseContent />
+        </Suspense>
     );
 }
