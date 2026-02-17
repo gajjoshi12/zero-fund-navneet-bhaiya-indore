@@ -4,11 +4,11 @@ export default function Testimonials() {
     const testimonials = [
         {
             rating: 5,
-            text: '"TradeFund Pro changed my trading career. The evaluation process was fair, and the payout was lightning fast. I received my ₹12 Lakh profit within 24 hours!"',
+            text: '"TradeFund Pro changed my trading career. The evaluation process was fair, and the payout was lightning fast. I received my $15,000 profit within 24 hours!"',
             author: {
-                initials: 'AK',
-                name: 'Arjun K.',
-                details: '₹80 Lakh Funded Trader • 🇮🇳 Mumbai'
+                initials: 'JM',
+                name: 'John M.',
+                details: '$100K Funded Trader • 🇺🇸 New York'
             }
         },
         {
@@ -16,17 +16,17 @@ export default function Testimonials() {
             text: '"The best prop firm I\'ve worked with. No hidden rules, transparent conditions, and excellent customer support. Already on my third payout!"',
             author: {
                 initials: 'SM',
-                name: 'Sneha M.',
-                details: '₹1.6 Crore Funded Trader • 🇮🇳 Delhi'
+                name: 'Sarah M.',
+                details: '$200K Funded Trader • 🇬🇧 London'
             }
         },
         {
             rating: 5,
-            text: '"From skeptic to believer. I was hesitant at first, but after receiving my first ₹6,70,000 payout, I know this is the real deal. Highly recommend!"',
+            text: '"From skeptic to believer. I was hesitant at first, but after receiving my first $8,000 payout, I know this is the real deal. Highly recommend!"',
             author: {
                 initials: 'RK',
-                name: 'Raj K.',
-                details: '₹40 Lakh Funded Trader • 🇮🇳 Hyderabad'
+                name: 'Robert K.',
+                details: '$50K Funded Trader • 🇨🇦 Toronto'
             }
         }
     ];

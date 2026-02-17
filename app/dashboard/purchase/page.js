@@ -11,7 +11,7 @@ function PurchaseContent() {
     const searchParams = useSearchParams();
 
     // Get plan details from URL params
-    const planSize = searchParams.get('size') || '₹40,00,000';
+    const planSize = searchParams.get('size') || '$50,000';
     const planPrice = searchParams.get('price') || '24,999';
     const planType = searchParams.get('type') || '1-step';
     const profitSplit = searchParams.get('split') || '85%';
@@ -144,7 +144,7 @@ function PurchaseContent() {
                                 <ul>
                                     <li>Profit split as specified in your selected plan</li>
                                     <li>Payouts processed within 24-48 hours</li>
-                                    <li>Minimum payout threshold: ₹5,000</li>
+                                    <li>Minimum payout threshold: $100</li>
                                     <li>All profits are yours to keep after the split</li>
                                 </ul>
                             </div>
@@ -275,7 +275,7 @@ function PurchaseContent() {
                     <div className="plan-summary-divider"></div>
                     <div className="plan-summary-row total">
                         <span className="plan-label">Total</span>
-                        <span className="plan-value">₹{planPrice}</span>
+                        <span className="plan-value">${planPrice}</span>
                     </div>
                 </div>
 
@@ -286,30 +286,6 @@ function PurchaseContent() {
                         <p className="step-subtitle">Choose your preferred trading platform for your funded account</p>
 
                         <div className="platform-options">
-                            <div
-                                className={`platform-card glass-card ${accountType === 'mt4' ? 'selected' : ''}`}
-                                onClick={() => handleAccountSelect('mt4')}
-                            >
-                                <div className="platform-icon">
-                                    <svg viewBox="0 0 48 48" fill="none">
-                                        <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" strokeWidth="2" />
-                                        <path d="M12 28L18 20L24 24L32 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                        <circle cx="12" cy="28" r="2" fill="currentColor" />
-                                        <circle cx="18" cy="20" r="2" fill="currentColor" />
-                                        <circle cx="24" cy="24" r="2" fill="currentColor" />
-                                        <circle cx="32" cy="16" r="2" fill="currentColor" />
-                                    </svg>
-                                </div>
-                                <h3>MetaTrader 4</h3>
-                                <p>Classic platform with proven reliability</p>
-                                <ul className="platform-features">
-                                    <li>✓ 30+ built-in indicators</li>
-                                    <li>✓ Expert Advisors (EA)</li>
-                                    <li>✓ Mobile & Desktop</li>
-                                </ul>
-                                {accountType === 'mt4' && <div className="selected-badge">Selected</div>}
-                            </div>
-
                             <div
                                 className={`platform-card glass-card ${accountType === 'mt5' ? 'selected' : ''}`}
                                 onClick={() => handleAccountSelect('mt5')}
@@ -421,7 +397,7 @@ function PurchaseContent() {
 
                             <div className="payment-total">
                                 <span>Amount to Pay:</span>
-                                <span className="total-amount">₹{planPrice}</span>
+                                <span className="total-amount">${planPrice}</span>
                             </div>
 
                             <button
@@ -436,7 +412,7 @@ function PurchaseContent() {
                                     </>
                                 ) : (
                                     <>
-                                        Pay ₹{planPrice}
+                                        Pay ${planPrice}
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                         </svg>

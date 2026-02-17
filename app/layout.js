@@ -10,10 +10,10 @@ const inter = Inter({
 
 export const metadata = {
   title: 'TradeFund Pro | Get Funded - Trade Like a Pro',
-  description: 'Join 500,000+ traders worldwide. Get funded accounts up to ₹4,00,00,000 and keep up to 90% of your profits. Complete our challenges and start trading today.',
+  description: 'Join 500,000+ traders worldwide. Get funded accounts up to $500,000 and keep up to 90% of your profits. Complete our challenges and start trading today.',
   openGraph: {
     title: 'TradeFund Pro | Get Funded - Trade Like a Pro',
-    description: 'Join 500,000+ traders worldwide. Get funded accounts up to ₹4,00,00,000 and keep up to 90% of your profits.',
+    description: 'Join 500,000+ traders worldwide. Get funded accounts up to $500,000 and keep up to 90% of your profits.',
     type: 'website',
   },
 };

@@ -4,24 +4,24 @@ import { useState, useEffect } from 'react';
 
 export default function Payouts() {
     const [payoutsList, setPayoutsList] = useState([
-        { initials: 'RS', name: 'Rohit S.', location: '🇮🇳 Mumbai', amount: '+₹7,35,000' },
-        { initials: 'PK', name: 'Priya K.', location: '🇮🇳 Delhi', amount: '+₹12,75,000' },
-        { initials: 'AM', name: 'Amit M.', location: '🇮🇳 Bangalore', amount: '+₹18,90,000' },
-        { initials: 'VR', name: 'Vikram R.', location: '🇮🇳 Chennai', amount: '+₹5,29,000' },
-        { initials: 'NS', name: 'Neha S.', location: '🇮🇳 Pune', amount: '+₹9,91,000' },
+        { initials: 'JM', name: 'John M.', location: '🇺🇸 USA', amount: '+$8,750' },
+        { initials: 'SK', name: 'Sarah K.', location: '🇬🇧 UK', amount: '+$15,200' },
+        { initials: 'AM', name: 'Alex M.', location: '🇨🇦 Canada', amount: '+$22,500' },
+        { initials: 'MR', name: 'Michael R.', location: '🇦🇺 Australia', amount: '+$6,300' },
+        { initials: 'LS', name: 'Lisa S.', location: '🇩🇪 Germany', amount: '+$11,800' },
     ]);
 
     const allPayouts = [
-        { initials: 'RS', name: 'Rohit S.', location: '🇮🇳 Mumbai', amount: '+₹7,35,000' },
-        { initials: 'PK', name: 'Priya K.', location: '🇮🇳 Delhi', amount: '+₹12,75,000' },
-        { initials: 'AM', name: 'Amit M.', location: '🇮🇳 Bangalore', amount: '+₹18,90,000' },
-        { initials: 'VR', name: 'Vikram R.', location: '🇮🇳 Chennai', amount: '+₹5,29,000' },
-        { initials: 'NS', name: 'Neha S.', location: '🇮🇳 Pune', amount: '+₹9,91,000' },
-        { initials: 'SK', name: 'Sanjay K.', location: '🇮🇳 Hyderabad', amount: '+₹7,89,000' },
-        { initials: 'AD', name: 'Anjali D.', location: '🇮🇳 Kolkata', amount: '+₹15,32,000' },
-        { initials: 'RP', name: 'Rajesh P.', location: '🇮🇳 Ahmedabad', amount: '+₹6,38,000' },
-        { initials: 'MS', name: 'Meera S.', location: '🇮🇳 Jaipur', amount: '+₹11,84,000' },
-        { initials: 'VK', name: 'Vishal K.', location: '🇮🇳 Lucknow', amount: '+₹16,65,000' },
+        { initials: 'JM', name: 'John M.', location: '🇺🇸 USA', amount: '+$8,750' },
+        { initials: 'SK', name: 'Sarah K.', location: '🇬🇧 UK', amount: '+$15,200' },
+        { initials: 'AM', name: 'Alex M.', location: '🇨🇦 Canada', amount: '+$22,500' },
+        { initials: 'MR', name: 'Michael R.', location: '🇦🇺 Australia', amount: '+$6,300' },
+        { initials: 'LS', name: 'Lisa S.', location: '🇩🇪 Germany', amount: '+$11,800' },
+        { initials: 'DK', name: 'David K.', location: '🇳🇱 Netherlands', amount: '+$9,400' },
+        { initials: 'ED', name: 'Emma D.', location: '🇫🇷 France', amount: '+$18,200' },
+        { initials: 'RP', name: 'Robert P.', location: '🇸🇬 Singapore', amount: '+$7,600' },
+        { initials: 'MS', name: 'Maria S.', location: '🇪🇸 Spain', amount: '+$14,100' },
+        { initials: 'TK', name: 'Thomas K.', location: '🇨🇭 Switzerland', amount: '+$19,800' },
     ];
 
     useEffect(() => {
@@ -47,12 +47,12 @@ export default function Payouts() {
                 <div className="payouts-content">
                     <div className="payouts-info animate-on-scroll">
                         <span className="section-badge">Real Payouts</span>
-                        <h2 className="section-title">Over <span className="gradient-text">₹400 Crore</span> Paid to Traders</h2>
+                        <h2 className="section-title">Over <span className="gradient-text">$50 Million</span> Paid to Traders</h2>
                         <p className="section-subtitle">Join thousands of traders who have already received their payouts. Fast, reliable, and hassle-free withdrawals.</p>
 
                         <div className="payout-stats">
                             <div className="payout-stat">
-                                <span className="payout-stat-number">₹400Cr+</span>
+                                <span className="payout-stat-number">$50M+</span>
                                 <span className="payout-stat-label">Total Paid Out</span>
                             </div>
                             <div className="payout-stat">

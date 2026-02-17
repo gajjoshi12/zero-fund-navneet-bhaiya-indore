@@ -8,34 +8,34 @@ export default function Challenges() {
     const [activeSize, setActiveSize] = useState(2); // Default to the "Most Popular" plan
 
     const accountSizes = [
-        { label: '₹8L', value: '₹8,00,000' },
-        { label: '₹20L', value: '₹20,00,000' },
-        { label: '₹40L', value: '₹40,00,000' },
-        { label: '₹80L', value: '₹80,00,000' },
-        { label: '₹1.6Cr', value: '₹1,60,00,000' }
+        { label: '$10K', value: '$10,000' },
+        { label: '$25K', value: '$25,000' },
+        { label: '$50K', value: '$50,000' },
+        { label: '$100K', value: '$100,000' },
+        { label: '$200K', value: '$200,000' }
     ];
 
     const pricingPlans = {
         '1-step': [
-            { price: '7,499', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '80%', popular: false },
-            { price: '16,999', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '80%', popular: false },
-            { price: '24,999', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '85%', popular: true },
-            { price: '41,999', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '90%', popular: false },
-            { price: '74,999', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '90%', popular: false }
+            { price: '99', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '80%', popular: false },
+            { price: '199', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '80%', popular: false },
+            { price: '299', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '85%', popular: true },
+            { price: '499', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '90%', popular: false },
+            { price: '899', profitTarget: '8%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '90%', popular: false }
         ],
         '2-step': [
-            { price: '5,999', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '80%', popular: false },
-            { price: '13,499', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '80%', popular: false },
-            { price: '19,999', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '85%', popular: true },
-            { price: '34,999', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '90%', popular: false },
-            { price: '64,999', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '90%', popular: false }
+            { price: '79', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '80%', popular: false },
+            { price: '159', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '80%', popular: false },
+            { price: '249', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '85%', popular: true },
+            { price: '419', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '90%', popular: false },
+            { price: '779', profitTarget: '10% / 5%', dailyDrawdown: '5%', totalDrawdown: '10%', minDays: '5', timeLimit: 'Unlimited', profitSplit: '90%', popular: false }
         ],
         'instant': [
-            { price: '14,999', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '60%', popular: false },
-            { price: '32,999', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '60%', popular: false },
-            { price: '49,999', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '70%', popular: true },
-            { price: '84,999', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '75%', popular: false },
-            { price: '1,49,999', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '80%', popular: false }
+            { price: '179', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '60%', popular: false },
+            { price: '399', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '60%', popular: false },
+            { price: '599', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '70%', popular: true },
+            { price: '999', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '75%', popular: false },
+            { price: '1,799', profitTarget: 'None', dailyDrawdown: '4%', totalDrawdown: '8%', minDays: '0', timeLimit: 'Unlimited', profitSplit: '80%', popular: false }
         ]
     };
 
@@ -123,7 +123,7 @@ export default function Challenges() {
                             <div className="fn-price-info">
                                 <span className="fn-price-label">One-time Fee</span>
                                 <div className="fn-price-value">
-                                    <span className="fn-currency">₹</span>
+                                    <span className="fn-currency">$</span>
                                     <span className="fn-amount">{currentPlan.price}</span>
                                 </div>
                             </div>
@@ -162,7 +162,7 @@ export default function Challenges() {
                             >
                                 {pricingPlans[activeTab][index].popular && <span className="fn-mini-badge">Popular</span>}
                                 <span className="fn-compare-size">{size.label}</span>
-                                <span className="fn-compare-price">₹{pricingPlans[activeTab][index].price}</span>
+                                <span className="fn-compare-price">${pricingPlans[activeTab][index].price}</span>
                                 <span className="fn-compare-split">{pricingPlans[activeTab][index].profitSplit} Split</span>
                             </div>
                         ))}

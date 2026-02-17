@@ -5,12 +5,12 @@ import { useState, useEffect, useCallback } from 'react';
 export default function SMSNotifications() {
     const [notifications, setNotifications] = useState([]);
 
-    // Random Indian names
+    // International names
     const firstNames = [
-        'Rohit', 'Priya', 'Amit', 'Neha', 'Vikram', 'Anjali', 'Rajesh', 'Meera',
-        'Vishal', 'Karan', 'Sneha', 'Arjun', 'Pooja', 'Rahul', 'Divya', 'Anil',
-        'Kavita', 'Suresh', 'Ritu', 'Deepak', 'Anita', 'Manoj', 'Swati', 'Vinay',
-        'Nisha', 'Sanjay', 'Preeti', 'Ravi', 'Sunita', 'Gaurav', 'Shweta', 'Nikhil'
+        'John', 'Sarah', 'Alex', 'Michael', 'Lisa', 'David', 'Emma', 'Robert',
+        'Maria', 'Thomas', 'James', 'Emily', 'William', 'Sophie', 'Daniel', 'Anna',
+        'Kevin', 'Laura', 'Chris', 'Jessica', 'Andrew', 'Rachel', 'Steven', 'Nicole',
+        'Mark', 'Jennifer', 'Paul', 'Ashley', 'Brian', 'Michelle', 'Eric', 'Amanda'
     ];
 
     const lastInitials = ['S', 'K', 'M', 'R', 'P', 'D', 'G', 'V', 'T', 'B', 'A', 'C', 'J', 'N'];
@@ -29,9 +29,9 @@ export default function SMSNotifications() {
     ];
 
     const amounts = [
-        '₹2,500', '₹5,000', '₹7,500', '₹10,000', '₹15,000',
-        '₹25,000', '₹50,000', '₹75,000', '₹1,00,000', '₹1,50,000',
-        '₹2,00,000', '₹3,50,000', '₹5,00,000', '₹7,50,000'
+        '$50', '$100', '$150', '$250', '$500',
+        '$750', '$1,000', '$1,500', '$2,500', '$5,000',
+        '$7,500', '$10,000', '$15,000', '$25,000'
     ];
 
     const generateRandomNotification = useCallback(() => {

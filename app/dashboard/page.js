@@ -169,50 +169,6 @@ export default function DashboardPage() {
                     <div className="dashboard-content">
                         <h1 className="dashboard-title">Welcome back, <span className="gradient-text">{user.name}</span>!</h1>
 
-                        <div className="trading-actions-grid">
-                            <a href="https://member.srglobalfx.com/register" target="_blank" rel="noopener noreferrer" className="trading-card register">
-                                <div className="trading-card-content">
-                                    <div className="trading-card-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="8.5" cy="7" r="4"></circle>
-                                            <line x1="20" y1="8" x2="20" y2="14"></line>
-                                            <line x1="23" y1="11" x2="17" y2="11"></line>
-                                        </svg>
-                                    </div>
-                                    <h3>Start Trading Now</h3>
-                                    <p>Register for a new trading account to begin your journey with our advanced platform.</p>
-                                    <span className="btn-arrow">
-                                        Register Now
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                            <polyline points="12 5 19 12 12 19"></polyline>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </a>
-
-                            <a href="https://member.srglobalfx.com/login" target="_blank" rel="noopener noreferrer" className="trading-card login">
-                                <div className="trading-card-content">
-                                    <div className="trading-card-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                                            <polyline points="10 17 15 12 10 7"></polyline>
-                                            <line x1="15" y1="12" x2="3" y2="12"></line>
-                                        </svg>
-                                    </div>
-                                    <h3>Access Trading Dashboard</h3>
-                                    <p>Already have an account? Login to manage your trades and view performance.</p>
-                                    <span className="btn-arrow">
-                                        Login to Trade
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                            <polyline points="12 5 19 12 12 19"></polyline>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </a>
-                        </div>
 
                         <div className="stats-grid">
                             <div className="stat-card glass-card">
@@ -262,7 +218,7 @@ export default function DashboardPage() {
                                     </svg>
                                 </div>
                                 <div className="stat-info">
-                                    <span className="stat-value">₹{(stats?.totalEarnings || 0).toLocaleString('en-IN')}</span>
+                                    <span className="stat-value">${(stats?.totalEarnings || 0).toLocaleString('en-US')}</span>
                                     <span className="stat-label">Total Earnings</span>
                                 </div>
                             </div>
@@ -272,8 +228,8 @@ export default function DashboardPage() {
                             <h2>Current Balance</h2>
                             <div className="balance-card glass-card">
                                 <div className="balance-amount">
-                                    <span className="currency">₹</span>
-                                    <span className="amount">{(stats?.balance || 0).toLocaleString('en-IN')}</span>
+                                    <span className="currency">$</span>
+                                    <span className="amount">{(stats?.balance || 0).toLocaleString('en-US')}</span>
                                 </div>
                                 <p className="balance-label">Available for withdrawal</p>
                                 <button className="btn btn-primary">Request Withdrawal</button>
@@ -294,7 +250,7 @@ export default function DashboardPage() {
                                     <div key={task.id} className="task-card glass-card">
                                         <div className="task-header">
                                             <h3 className="task-title">{task.title}</h3>
-                                            <span className="task-reward">₹{task.reward.toLocaleString('en-IN')}</span>
+                                            <span className="task-reward">${task.reward.toLocaleString('en-US')}</span>
                                         </div>
                                         <p className="task-description">{task.description}</p>
                                         <div className="task-requirements">
@@ -306,14 +262,14 @@ export default function DashboardPage() {
                                             </ul>
                                         </div>
                                         <div className="task-footer">
-                                            <span className="task-deadline">Deadline: {new Date(task.deadline).toLocaleDateString('en-IN')}</span>
+                                            <span className="task-deadline">Deadline: {new Date(task.deadline).toLocaleDateString('en-US')}</span>
                                             {assignment ? (
                                                 <span className={`task-status ${assignment.status}`}>
                                                     {assignment.status.replace('_', ' ')}
                                                 </span>
                                             ) : (
                                                 <Link
-                                                    href={`/dashboard/purchase?size=${encodeURIComponent(task.title)}&price=${task.reward.toLocaleString('en-IN')}&type=challenge&split=80%25`}
+                                                    href={`/dashboard/purchase?size=${encodeURIComponent(task.title)}&price=${task.reward.toLocaleString('en-US')}&type=challenge&split=80%25`}
                                                     className="btn btn-primary btn-sm"
                                                 >
                                                     Claim Task
@@ -361,7 +317,7 @@ export default function DashboardPage() {
                                             <p className="task-description">{task.description}</p>
                                             <div className="task-reward-display">
                                                 <span className="label">Reward:</span>
-                                                <span className="value">₹{task.reward.toLocaleString('en-IN')}</span>
+                                                <span className="value">${task.reward.toLocaleString('en-US')}</span>
                                             </div>
                                             <div className="task-footer">
                                                 {(assignment.status === 'pending' || assignment.status === 'in_progress' || assignment.status === 'rejected') && (
@@ -394,11 +350,11 @@ export default function DashboardPage() {
                         <div className="earnings-overview">
                             <div className="earnings-card glass-card">
                                 <h3>Total Earnings</h3>
-                                <span className="earnings-amount">₹{(stats?.totalEarnings || 0).toLocaleString('en-IN')}</span>
+                                <span className="earnings-amount">${(stats?.totalEarnings || 0).toLocaleString('en-US')}</span>
                             </div>
                             <div className="earnings-card glass-card">
                                 <h3>Available Balance</h3>
-                                <span className="earnings-amount">₹{(stats?.balance || 0).toLocaleString('en-IN')}</span>
+                                <span className="earnings-amount">${(stats?.balance || 0).toLocaleString('en-US')}</span>
                             </div>
                             <div className="earnings-card glass-card">
                                 <h3>Completed Tasks</h3>
@@ -408,7 +364,7 @@ export default function DashboardPage() {
 
                         <div className="withdrawal-section glass-card">
                             <h2>Request Withdrawal</h2>
-                            <p>Minimum withdrawal amount: ₹5,000</p>
+                            <p>Minimum withdrawal amount: $100</p>
                             <div className="withdrawal-form">
                                 <input type="number" placeholder="Enter amount" className="withdrawal-input" />
                                 <button className="btn btn-primary">Request Withdrawal</button>

@@ -269,7 +269,7 @@ export default function AdminPage() {
                                     </svg>
                                 </div>
                                 <div className="stat-info">
-                                    <span className="stat-value">₹{(stats?.totalPaidOut || 0).toLocaleString('en-IN')}</span>
+                                    <span className="stat-value">${(stats?.totalPaidOut || 0).toLocaleString('en-US')}</span>
                                     <span className="stat-label">Total Paid Out</span>
                                 </div>
                             </div>
@@ -319,7 +319,7 @@ export default function AdminPage() {
                                     <span>{u.name}</span>
                                     <span>{u.email}</span>
                                     <span>{u.phone || '-'}</span>
-                                    <span>₹{(u.totalEarnings || 0).toLocaleString('en-IN')}</span>
+                                    <span>${(u.totalEarnings || 0).toLocaleString('en-US')}</span>
                                     <span className={`user-status ${u.status || 'active'}`}>{u.status || 'active'}</span>
                                     <div className="row-actions">
                                         <button
@@ -375,7 +375,7 @@ export default function AdminPage() {
                                         </div>
                                         <div className="form-row">
                                             <div className="form-group">
-                                                <label>Reward (₹)</label>
+                                                <label>Reward ($)</label>
                                                 <input
                                                     type="number"
                                                     value={newTask.reward}
@@ -442,7 +442,7 @@ export default function AdminPage() {
                                 <div key={task.id} className="admin-task-card glass-card">
                                     <div className="task-header">
                                         <h3>{task.title}</h3>
-                                        <span className="task-reward">₹{task.reward.toLocaleString('en-IN')}</span>
+                                        <span className="task-reward">${task.reward.toLocaleString('en-US')}</span>
                                     </div>
                                     <p className="task-description">{task.description}</p>
                                     <div className="task-meta">
@@ -498,7 +498,7 @@ export default function AdminPage() {
 
                                         <div className="submission-task">
                                             <h4>{task?.title || 'Unknown Task'}</h4>
-                                            <span className="task-reward">Reward: ₹{task?.reward?.toLocaleString('en-IN') || 0}</span>
+                                            <span className="task-reward">Reward: ${task?.reward?.toLocaleString('en-US') || 0}</span>
                                         </div>
 
                                         {submission.proofUrl && (

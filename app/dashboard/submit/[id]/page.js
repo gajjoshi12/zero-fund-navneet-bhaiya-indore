@@ -92,7 +92,7 @@ export default function SubmitProofPage() {
                         <h2>{task.title}</h2>
                         <p>{task.description}</p>
                         <div className="task-meta">
-                            <span className="reward">Reward: ₹{task.reward.toLocaleString('en-IN')}</span>
+                            <span className="reward">Reward: ${task.reward.toLocaleString('en-US')}</span>
                             <span className={`status ${assignment.status}`}>{assignment.status.replace('_', ' ')}</span>
                         </div>
                     </div>

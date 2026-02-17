@@ -13,7 +13,7 @@ export default function HowItWorks() {
                 </svg>
             ),
             title: 'Choose Your Challenge',
-            desc: 'Select an account size that fits your trading style. From ₹8 Lakh to ₹4 Crore, we have options for every trader.'
+            desc: 'Select an account size that fits your trading style. From $10K to $200K, we have options for every trader.'
         },
         {
             number: '02',

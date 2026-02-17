@@ -8,7 +8,7 @@ export default function Hero() {
             <div className="hero-content">
                 <div className="hero-badge animate-fade-in">
                     <span className="badge-icon">🚀</span>
-                    <span>Over ₹400 Crore+ Paid to Traders</span>
+                    <span>Over $50M+ Paid to Traders</span>
                 </div>
 
                 <h1 className="hero-title animate-fade-in-up">
@@ -18,7 +18,7 @@ export default function Hero() {
 
                 <p className="hero-subtitle animate-fade-in-up delay-1">
                     Join over <strong>500,000+ traders</strong> worldwide. Complete our evaluation challenges,
-                    prove your trading skills, and get funded up to <strong>₹4,00,00,000</strong> in trading capital.
+                    prove your trading skills, and get funded up to <strong>$500,000</strong> in trading capital.
                 </p>
 
                 <div className="hero-cta animate-fade-in-up delay-2">
@@ -38,7 +38,7 @@ export default function Hero() {
                     </div>
                     <div className="stat-divider"></div>
                     <div className="stat-item">
-                        <span className="stat-number">₹400Cr+</span>
+                        <span className="stat-number">$50M+</span>
                         <span className="stat-label">Total Payouts</span>
                     </div>
                     <div className="stat-divider"></div>
@@ -57,13 +57,13 @@ export default function Hero() {
                     </div>
                     <div className="card-body">
                         <div className="trader-info">
-                            <div className="trader-avatar">RS</div>
+                            <div className="trader-avatar">JM</div>
                             <div>
-                                <div className="trader-name">Rahul S.</div>
-                                <div className="trader-location">🇮🇳 India</div>
+                                <div className="trader-name">John M.</div>
+                                <div className="trader-location">🇺🇸 USA</div>
                             </div>
                         </div>
-                        <div className="payout-amount">+₹10,50,000</div>
+                        <div className="payout-amount">+$12,500</div>
                         <div className="payout-label">Profit Payout</div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@ export default function Hero() {
                         </div>
                         <div className="challenge-info">
                             <div className="challenge-title">Phase 2 Complete</div>
-                            <div className="challenge-subtitle">₹80 Lakh Account Unlocked</div>
+                            <div className="challenge-subtitle">$100K Account Unlocked</div>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@ export function initializeDemoData() {
             id: 'task_1',
             title: 'Complete Trading Challenge - Phase 1',
             description: 'Achieve 8% profit target within the drawdown limits. Trade any instrument of your choice.',
-            reward: 50000,
+            reward: 500,
             deadline: '2026-02-15',
             requirements: [
                 'Minimum 5 trading days',
@@ -26,7 +26,7 @@ export function initializeDemoData() {
             id: 'task_2',
             title: 'Social Media Promotion',
             description: 'Share your trading journey on social media and tag @TradeFundPro. Submit screenshot as proof.',
-            reward: 5000,
+            reward: 50,
             deadline: '2026-02-01',
             requirements: [
                 'Post on Instagram or Twitter',
@@ -41,7 +41,7 @@ export function initializeDemoData() {
             id: 'task_3',
             title: 'Refer a Friend',
             description: 'Refer a friend to join TradeFund Pro and earn bonus when they complete their first challenge.',
-            reward: 10000,
+            reward: 100,
             deadline: '2026-03-01',
             requirements: [
                 'Friend must signup using your referral link',
@@ -55,7 +55,7 @@ export function initializeDemoData() {
             id: 'task_4',
             title: 'Video Testimonial',
             description: 'Record a 1-2 minute video testimonial about your experience with TradeFund Pro.',
-            reward: 15000,
+            reward: 150,
             deadline: '2026-02-28',
             requirements: [
                 'Video must be 1-2 minutes long',
