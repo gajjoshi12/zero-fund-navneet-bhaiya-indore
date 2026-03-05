@@ -41,8 +41,8 @@ function PurchaseContent() {
             if (planType) currentParams.set('type', planType);
             if (profitSplit) currentParams.set('split', profitSplit);
 
-            const purchaseUrl = `/dashboard/purchase??{currentParams.toString()}`;
-            router.push(`/auth/signup?redirect=?{encodeURIComponent(purchaseUrl)}`);
+            const purchaseUrl = `/dashboard/purchase?${currentParams.toString()}`;
+            router.push(`/auth/signup?redirect=${encodeURIComponent(purchaseUrl)}`);
         }
     }, [user, loading, router, planSize, planPrice, planType, profitSplit]);
 
@@ -272,7 +272,7 @@ function PurchaseContent() {
                             </label>
 
                             <button
-                                className={`btn btn-gradient btn-lg btn-block ?{!tcAccepted ? 'disabled' : ''}`}
+                                className={`btn btn-gradient btn-lg btn-block ${!tcAccepted ? 'disabled' : ''}`}
                                 onClick={handleAcceptTC}
                                 disabled={!tcAccepted}
                             >
@@ -290,27 +290,40 @@ function PurchaseContent() {
                 {/* Header */}
                 <div className="purchase-header">
                     <Link href="/" className="logo">
+                        <div className="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 0, 127, 0.6)) drop-shadow(0 0 16px rgba(0, 240, 255, 0.4))' }}>
+                                <circle cx="20" cy="20" r="18" stroke="url(#staticPremiumGrad)" strokeWidth="3" />
+                                <path d="M12 20L18 26L28 14" stroke="url(#staticPremiumGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                <defs>
+                                    <linearGradient id="staticPremiumGrad" x1="0" y1="0" x2="40" y2="40">
+                                        <stop offset="0%" stopColor="#FF007F" />
+                                        <stop offset="50%" stopColor="#8A2BE2" />
+                                        <stop offset="100%" stopColor="#00F0FF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
                         <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                     </Link>
                 </div>
 
                 {/* Progress Steps */}
                 <div className="purchase-steps">
-                    <div className={`step ?{currentStep >= 1 ? 'active' : ''} ?{currentStep > 1 ? 'completed' : ''}`}>
+                    <div className={`step ${currentStep >= 1 ? 'active' : ''} ${currentStep > 1 ? 'completed' : ''}`}>
                         <div className="step-number">
                             {currentStep > 1 ? '✓' : '1'}
                         </div>
                         <span className="step-label">Platform</span>
                     </div>
                     <div className="step-line"></div>
-                    <div className={`step ?{currentStep >= 2 ? 'active' : ''} ?{currentStep > 2 ? 'completed' : ''}`}>
+                    <div className={`step ${currentStep >= 2 ? 'active' : ''} ${currentStep > 2 ? 'completed' : ''}`}>
                         <div className="step-number">
                             {currentStep > 2 ? '✓' : '2'}
                         </div>
                         <span className="step-label">Payment</span>
                     </div>
                     <div className="step-line"></div>
-                    <div className={`step ?{currentStep >= 3 ? 'active' : ''}`}>
+                    <div className={`step ${currentStep >= 3 ? 'active' : ''}`}>
                         <div className="step-number">3</div>
                         <span className="step-label">Credentials</span>
                     </div>
@@ -333,7 +346,7 @@ function PurchaseContent() {
                     <div className="plan-summary-divider"></div>
                     <div className="plan-summary-row total">
                         <span className="plan-label">Total</span>
-                        <span className="plan-value">?{planPrice}</span>
+                        <span className="plan-value">${planPrice}</span>
                     </div>
                 </div>
 
@@ -345,7 +358,7 @@ function PurchaseContent() {
 
                         <div className="platform-options">
                             <div
-                                className={`platform-card glass-card ?{accountType === 'mt5' ? 'selected' : ''}`}
+                                className={`platform-card glass-card ${accountType === 'mt5' ? 'selected' : ''}`}
                                 onClick={() => handleAccountSelect('mt5')}
                             >
                                 <div className="platform-icon">
@@ -371,7 +384,7 @@ function PurchaseContent() {
                         </div>
 
                         <button
-                            className={`btn btn-gradient btn-lg btn-block ?{!accountType ? 'disabled' : ''}`}
+                            className={`btn btn-gradient btn-lg btn-block ${!accountType ? 'disabled' : ''}`}
                             onClick={handleContinueToPayment}
                             disabled={!accountType}
                         >
@@ -455,12 +468,12 @@ function PurchaseContent() {
 
                             <div className="payment-total">
                                 <span>Amount to Pay:</span>
-                                <span className="total-amount">?{planPrice}</span>
+                                <span className="total-amount">${planPrice}</span>
                             </div>
 
                             <button
                                 type="submit"
-                                className={`btn btn-gradient btn-lg btn-block ?{isProcessing ? 'processing' : ''}`}
+                                className={`btn btn-gradient btn-lg btn-block ${isProcessing ? 'processing' : ''}`}
                                 disabled={isProcessing}
                             >
                                 {isProcessing ? (
@@ -470,7 +483,7 @@ function PurchaseContent() {
                                     </>
                                 ) : (
                                     <>
-                                        Pay ?{planPrice}
+                                        Pay ${planPrice}
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                         </svg>
@@ -553,7 +566,7 @@ function PurchaseContent() {
                                 <div className="credential-value">
                                     <span>{credentials.server}</span>
                                     <button
-                                        className={`copy-btn ?{copied === 'server' ? 'copied' : ''}`}
+                                        className={`copy-btn ${copied === 'server' ? 'copied' : ''}`}
                                         onClick={() => handleCopy(credentials.server, 'server')}
                                     >
                                         {copied === 'server' ? '✓' : '📋'}
@@ -572,7 +585,7 @@ function PurchaseContent() {
                                 <div className="credential-value">
                                     <span className="highlight-text">{credentials.loginId}</span>
                                     <button
-                                        className={`copy-btn ?{copied === 'id' ? 'copied' : ''}`}
+                                        className={`copy-btn ${copied === 'id' ? 'copied' : ''}`}
                                         onClick={() => handleCopy(String(credentials.loginId), 'id')}
                                     >
                                         {copied === 'id' ? '✓' : '📋'}
@@ -591,7 +604,7 @@ function PurchaseContent() {
                                 <div className="credential-value">
                                     <span className="highlight-text">{credentials.mainPassword}</span>
                                     <button
-                                        className={`copy-btn ?{copied === 'mainPassword' ? 'copied' : ''}`}
+                                        className={`copy-btn ${copied === 'mainPassword' ? 'copied' : ''}`}
                                         onClick={() => handleCopy(credentials.mainPassword, 'mainPassword')}
                                     >
                                         {copied === 'mainPassword' ? '✓' : '📋'}
@@ -610,7 +623,7 @@ function PurchaseContent() {
                                 <div className="credential-value">
                                     <span className="highlight-text">{credentials.investorPassword}</span>
                                     <button
-                                        className={`copy-btn ?{copied === 'investorPassword' ? 'copied' : ''}`}
+                                        className={`copy-btn ${copied === 'investorPassword' ? 'copied' : ''}`}
                                         onClick={() => handleCopy(credentials.investorPassword, 'investorPassword')}
                                     >
                                         {copied === 'investorPassword' ? '✓' : '📋'}
@@ -670,6 +683,19 @@ function PurchaseLoadingSkeleton() {
             <div className="purchase-container">
                 <div className="purchase-header">
                     <div className="logo">
+                        <div className="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 0, 127, 0.6)) drop-shadow(0 0 16px rgba(0, 240, 255, 0.4))' }}>
+                                <circle cx="20" cy="20" r="18" stroke="url(#staticPremiumGrad)" strokeWidth="3" />
+                                <path d="M12 20L18 26L28 14" stroke="url(#staticPremiumGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                <defs>
+                                    <linearGradient id="staticPremiumGrad" x1="0" y1="0" x2="40" y2="40">
+                                        <stop offset="0%" stopColor="#FF007F" />
+                                        <stop offset="50%" stopColor="#8A2BE2" />
+                                        <stop offset="100%" stopColor="#00F0FF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
                         <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                     </div>
                 </div>

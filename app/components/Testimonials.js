@@ -44,7 +44,7 @@ export default function Testimonials() {
                         <div
                             key={index}
                             className="testimonial-card glass-card animate-on-scroll"
-                            style={{ '--delay': `?{index * 0.1}s` }}
+                            style={{ '--delay': `${index * 0.1}s` }}
                         >
                             <div className="testimonial-rating">
                                 {[...Array(testimonial.rating)].map((_, i) => (

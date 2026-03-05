@@ -128,23 +128,36 @@ export default function AdminPage() {
         <div className="dashboard-page admin-page">
             {/* Toast */}
             {toast && (
-                <div className={`toast-notification ?{toast.type}`}>
+                <div className={`toast-notification ${toast.type}`}>
                     <span>{toast.type === 'success' ? '✓' : '✕'}</span>
                     {toast.message}
                 </div>
             )}
 
             {/* Sidebar */}
-            <aside className={`dashboard-sidebar glass-card ?{mobileMenuOpen ? 'mobile-open' : ''}`}>
+            <aside className={`dashboard-sidebar glass-card ${mobileMenuOpen ? 'mobile-open' : ''}`}>
                 <div className="sidebar-header">
                     <Link href="/" className="logo">
+                        <div className="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 0, 127, 0.6)) drop-shadow(0 0 16px rgba(0, 240, 255, 0.4))' }}>
+                                <circle cx="20" cy="20" r="18" stroke="url(#staticPremiumGrad)" strokeWidth="3" />
+                                <path d="M12 20L18 26L28 14" stroke="url(#staticPremiumGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                <defs>
+                                    <linearGradient id="staticPremiumGrad" x1="0" y1="0" x2="40" y2="40">
+                                        <stop offset="0%" stopColor="#FF007F" />
+                                        <stop offset="50%" stopColor="#8A2BE2" />
+                                        <stop offset="100%" stopColor="#00F0FF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
                         <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                     </Link>
 
                     <div className="header-actions-group">
                         <span className="admin-badge">Admin</span>
                         <button
-                            className={`mobile-menu-btn dashboard-toggle ?{mobileMenuOpen ? 'active' : ''}`}
+                            className={`mobile-menu-btn dashboard-toggle ${mobileMenuOpen ? 'active' : ''}`}
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         >
                             <span></span><span></span><span></span>
@@ -154,34 +167,34 @@ export default function AdminPage() {
 
                 <div className="sidebar-content-wrapper">
                     <nav className="sidebar-nav">
-                        <button className={`sidebar-link ?{activeTab === 'overview' ? 'active' : ''}`} onClick={() => handleTabChange('overview')}>
+                        <button className={`sidebar-link ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => handleTabChange('overview')}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <rect x="3" y="3" width="7" height="9" /><rect x="14" y="3" width="7" height="5" />
                                 <rect x="14" y="12" width="7" height="9" /><rect x="3" y="16" width="7" height="5" />
                             </svg>
                             Dashboard
                         </button>
-                        <button className={`sidebar-link ?{activeTab === 'users' ? 'active' : ''}`} onClick={() => handleTabChange('users')}>
+                        <button className={`sidebar-link ${activeTab === 'users' ? 'active' : ''}`} onClick={() => handleTabChange('users')}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
                                 <path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
                             </svg>
                             Users ({users.length})
                         </button>
-                        <button className={`sidebar-link ?{activeTab === 'tasks' ? 'active' : ''}`} onClick={() => handleTabChange('tasks')}>
+                        <button className={`sidebar-link ${activeTab === 'tasks' ? 'active' : ''}`} onClick={() => handleTabChange('tasks')}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
                             </svg>
                             Tasks ({tasks.length})
                         </button>
-                        <button className={`sidebar-link ?{activeTab === 'submissions' ? 'active' : ''}`} onClick={() => handleTabChange('submissions')}>
+                        <button className={`sidebar-link ${activeTab === 'submissions' ? 'active' : ''}`} onClick={() => handleTabChange('submissions')}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                                 <polyline points="14,2 14,8 20,8" />
                             </svg>
                             Submissions ({submissions.filter(s => s.status === 'pending').length} pending)
                         </button>
-                        <button className={`sidebar-link ?{activeTab === 'accounts' ? 'active' : ''}`} onClick={() => handleTabChange('accounts')}>
+                        <button className={`sidebar-link ${activeTab === 'accounts' ? 'active' : ''}`} onClick={() => handleTabChange('accounts')}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
                                 <line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
@@ -258,7 +271,7 @@ export default function AdminPage() {
                                     </svg>
                                 </div>
                                 <div className="stat-info">
-                                    <span className="stat-value">?{(stats?.totalPaidOut || 0).toLocaleString('en-US')}</span>
+                                    <span className="stat-value">${(stats?.totalPaidOut || 0).toLocaleString('en-US')}</span>
                                     <span className="stat-label">Total Paid Out</span>
                                 </div>
                             </div>
@@ -276,7 +289,7 @@ export default function AdminPage() {
                                                 <span className="submission-user">{submissionUser?.name || 'Unknown'}</span>
                                                 <span className="submission-task">{task?.title || 'Unknown Task'}</span>
                                             </div>
-                                            <span className={`submission-status ?{submission.status}`}>{submission.status}</span>
+                                            <span className={`submission-status ${submission.status}`}>{submission.status}</span>
                                         </div>
                                     );
                                 })}
@@ -301,11 +314,11 @@ export default function AdminPage() {
                                     <span>{u.name}</span>
                                     <span>{u.email}</span>
                                     <span>{u.phone || '-'}</span>
-                                    <span>?{(Number(u.total_earnings) || 0).toLocaleString('en-US')}</span>
-                                    <span className={`user-status ?{u.status || 'active'}`}>{u.status || 'active'}</span>
+                                    <span>${(Number(u.total_earnings) || 0).toLocaleString('en-US')}</span>
+                                    <span className={`user-status ${u.status || 'active'}`}>{u.status || 'active'}</span>
                                     <div className="row-actions">
                                         <button
-                                            className={`btn-action ?{u.status === 'inactive' ? 'activate' : 'deactivate'}`}
+                                            className={`btn-action ${u.status === 'inactive' ? 'activate' : 'deactivate'}`}
                                             onClick={() => handleToggleUserStatus(u.sr_user_id)}
                                         >
                                             {u.status === 'inactive' ? 'Activate' : 'Deactivate'}
@@ -398,12 +411,12 @@ export default function AdminPage() {
                                 <div key={task.id} className="admin-task-card glass-card">
                                     <div className="task-header">
                                         <h3>{task.title}</h3>
-                                        <span className="task-reward">?{Number(task.reward).toLocaleString('en-US')}</span>
+                                        <span className="task-reward">${Number(task.reward).toLocaleString('en-US')}</span>
                                     </div>
                                     <p className="task-description">{task.description}</p>
                                     <div className="task-meta">
                                         <span>Deadline: {new Date(task.deadline).toLocaleDateString('en-US')}</span>
-                                        <span className={`task-status ?{task.status}`}>{task.status}</span>
+                                        <span className={`task-status ${task.status}`}>{task.status}</span>
                                     </div>
                                     <div className="task-actions">
                                         <button className="btn btn-outline btn-sm" onClick={() => { setSelectedTask(task.id); setShowAssignModal(true); }}>
@@ -445,12 +458,12 @@ export default function AdminPage() {
                                                     <span className="user-email">{submissionUser?.email || ''}</span>
                                                 </div>
                                             </div>
-                                            <span className={`submission-status ?{submission.status}`}>{submission.status}</span>
+                                            <span className={`submission-status ${submission.status}`}>{submission.status}</span>
                                         </div>
 
                                         <div className="submission-task">
                                             <h4>{task?.title || 'Unknown Task'}</h4>
-                                            <span className="task-reward">Reward: ?{Number(task?.reward || 0).toLocaleString('en-US')}</span>
+                                            <span className="task-reward">Reward: ${Number(task?.reward || 0).toLocaleString('en-US')}</span>
                                         </div>
 
                                         {submission.proof_url && (
@@ -523,12 +536,12 @@ export default function AdminPage() {
                                 const accUser = users.find(u => u.sr_user_id === acc.sr_user_id);
                                 return (
                                     <div key={acc.id} className="table-row">
-                                        <span>{accUser?.name || `User #?{acc.sr_user_id}`}</span>
+                                        <span>{accUser?.name || `User #${acc.sr_user_id}`}</span>
                                         <span className="highlight-value">{acc.login_id}</span>
                                         <span>{acc.account_size}</span>
                                         <span>{acc.profit_split}</span>
                                         <span>{acc.is_live ? '🏆 Live' : '🧪 Demo'}</span>
-                                        <span className={`account-status-badge ?{acc.status}`}>{acc.status}</span>
+                                        <span className={`account-status-badge ${acc.status}`}>{acc.status}</span>
                                         <span>{new Date(acc.created_at).toLocaleDateString('en-US')}</span>
                                     </div>
                                 );

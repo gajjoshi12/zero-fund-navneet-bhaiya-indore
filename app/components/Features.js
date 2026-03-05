@@ -51,7 +51,7 @@ export default function Features() {
                         <div
                             key={index}
                             className="feature-card glass-card animate-on-scroll"
-                            style={{ '--delay': `?{index * 0.1}s` }}
+                            style={{ '--delay': `${index * 0.1}s` }}
                         >
                             <div className="feature-icon">
                                 {feature.icon}

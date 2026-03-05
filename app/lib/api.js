@@ -21,12 +21,12 @@ async function request(endpoint, options = {}) {
 
     const headers = {
         'Content-Type': 'application/json',
-        ...(token && { 'Authorization': `Bearer ?{token}` }),
+        ...(token && { 'Authorization': `Bearer ${token}` }),
         ...(userId && { 'X-SR-User-Id': String(userId) }),
         ...options.headers,
     };
 
-    const response = await fetch(`?{API_BASE}?{endpoint}`, {
+    const response = await fetch(`${API_BASE}${endpoint}`, {
         ...options,
         headers,
     });

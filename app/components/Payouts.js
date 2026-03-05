@@ -73,7 +73,7 @@ export default function Payouts() {
                         </div>
                         <div className="feed-list">
                             {payoutsList.map((payout, index) => (
-                                <div key={`?{payout.initials}-?{index}`} className="feed-item">
+                                <div key={`${payout.initials}-${index}`} className="feed-item">
                                     <div className="feed-avatar">{payout.initials}</div>
                                     <div className="feed-info">
                                         <span className="feed-name">{payout.name}</span>

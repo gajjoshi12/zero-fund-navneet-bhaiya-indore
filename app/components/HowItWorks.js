@@ -51,9 +51,9 @@ export default function HowItWorks() {
                     {steps.map((step, index) => (
                         <>
                             <div
-                                key={`step-?{index}`}
+                                key={`step-${index}`}
                                 className="step-card animate-on-scroll"
-                                style={{ '--delay': `?{index * 0.2}s` }}
+                                style={{ '--delay': `${index * 0.2}s` }}
                             >
                                 <div className="step-number">{step.number}</div>
                                 <div className="step-icon">
@@ -64,7 +64,7 @@ export default function HowItWorks() {
                             </div>
 
                             {index < steps.length - 1 && (
-                                <div key={`connector-?{index}`} className="step-connector">
+                                <div key={`connector-${index}`} className="step-connector">
                                     <svg viewBox="0 0 100 20">
                                         <path d="M0 10 H90 L85 5 M90 10 L85 15" stroke="url(#connectorGrad)" strokeWidth="2" fill="none" />
                                         <defs>

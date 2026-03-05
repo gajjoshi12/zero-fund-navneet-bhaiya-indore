@@ -62,7 +62,7 @@ export default function Challenges() {
                 {/* Challenge Type Tabs */}
                 <div className="fn-plan-tabs">
                     <button
-                        className={`fn-tab-btn ?{activeTab === '1-step' ? 'active' : ''}`}
+                        className={`fn-tab-btn ${activeTab === '1-step' ? 'active' : ''}`}
                         onClick={() => setActiveTab('1-step')}
                     >
                         <span className="fn-tab-icon">⚡</span>
@@ -72,7 +72,7 @@ export default function Challenges() {
                         </span>
                     </button>
                     <button
-                        className={`fn-tab-btn ?{activeTab === '2-step' ? 'active' : ''}`}
+                        className={`fn-tab-btn ${activeTab === '2-step' ? 'active' : ''}`}
                         onClick={() => setActiveTab('2-step')}
                     >
                         <span className="fn-tab-icon">🚀</span>
@@ -82,7 +82,7 @@ export default function Challenges() {
                         </span>
                     </button>
                     <button
-                        className={`fn-tab-btn ?{activeTab === 'instant' ? 'active' : ''}`}
+                        className={`fn-tab-btn ${activeTab === 'instant' ? 'active' : ''}`}
                         onClick={() => setActiveTab('instant')}
                     >
                         <span className="fn-tab-icon">💎</span>
@@ -100,7 +100,7 @@ export default function Challenges() {
                         {accountSizes.map((size, index) => (
                             <button
                                 key={index}
-                                className={`fn-size-btn ?{activeSize === index ? 'active' : ''} ?{pricingPlans[activeTab][index].popular ? 'popular' : ''}`}
+                                className={`fn-size-btn ${activeSize === index ? 'active' : ''} ${pricingPlans[activeTab][index].popular ? 'popular' : ''}`}
                                 onClick={() => setActiveSize(index)}
                             >
                                 {size.label}
@@ -131,7 +131,7 @@ export default function Challenges() {
 
                         <div className="fn-features-grid">
                             {features.map((feature, index) => (
-                                <div key={index} className={`fn-feature-item ?{feature.highlight ? 'highlight' : ''}`}>
+                                <div key={index} className={`fn-feature-item ${feature.highlight ? 'highlight' : ''}`}>
                                     <span className="fn-feature-icon">{feature.icon}</span>
                                     <div className="fn-feature-content">
                                         <span className="fn-feature-label">{feature.label}</span>
@@ -142,7 +142,7 @@ export default function Challenges() {
                         </div>
 
                         <div className="fn-card-footer">
-                            <Link href={`/dashboard/purchase?size=?{encodeURIComponent(accountSizes[activeSize].value)}&price=?{currentPlan.price}&type=?{activeTab}&split=?{currentPlan.profitSplit}`} className="btn btn-gradient btn-lg btn-block">
+                            <Link href={`/dashboard/purchase?size=${encodeURIComponent(accountSizes[activeSize].value)}&price=${currentPlan.price}&type=${activeTab}&split=${currentPlan.profitSplit}`} className="btn btn-gradient btn-lg btn-block">
                                 <span>Get Funded Now</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
@@ -157,12 +157,12 @@ export default function Challenges() {
                         {accountSizes.map((size, index) => (
                             <div
                                 key={index}
-                                className={`fn-compare-card ?{activeSize === index ? 'active' : ''} ?{pricingPlans[activeTab][index].popular ? 'popular' : ''}`}
+                                className={`fn-compare-card ${activeSize === index ? 'active' : ''} ${pricingPlans[activeTab][index].popular ? 'popular' : ''}`}
                                 onClick={() => setActiveSize(index)}
                             >
                                 {pricingPlans[activeTab][index].popular && <span className="fn-mini-badge">Popular</span>}
                                 <span className="fn-compare-size">{size.label}</span>
-                                <span className="fn-compare-price">?{pricingPlans[activeTab][index].price}</span>
+                                <span className="fn-compare-price">${pricingPlans[activeTab][index].price}</span>
                                 <span className="fn-compare-split">{pricingPlans[activeTab][index].profitSplit} Split</span>
                             </div>
                         ))}

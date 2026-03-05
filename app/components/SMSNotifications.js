@@ -43,7 +43,7 @@ export default function SMSNotifications() {
         return {
             id: Date.now(),
             sender: 'Zero Fund',
-            message: `?{name} ?{initial}. got ?{amount} credited for completing ?{task}`,
+            message: `${name} ${initial}. got ${amount} credited for completing ${task}`,
             time: 'now',
             visible: true
         };
@@ -94,7 +94,7 @@ export default function SMSNotifications() {
             {notifications.map((notification) => (
                 <div
                     key={notification.id}
-                    className={`sms-notification ?{notification.visible ? 'visible' : ''}`}
+                    className={`sms-notification ${notification.visible ? 'visible' : ''}`}
                 >
                     <div className="sms-header">
                         <div className="sms-icon">

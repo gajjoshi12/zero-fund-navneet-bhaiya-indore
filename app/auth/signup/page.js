@@ -53,7 +53,20 @@ function SignupForm() {
                 <div className="auth-card glass-card">
                     <div className="auth-header">
                         <Link href="/" className="logo">
-                            <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
+                            <div className="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 0, 127, 0.6)) drop-shadow(0 0 16px rgba(0, 240, 255, 0.4))' }}>
+                                <circle cx="20" cy="20" r="18" stroke="url(#staticPremiumGrad)" strokeWidth="3" />
+                                <path d="M12 20L18 26L28 14" stroke="url(#staticPremiumGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                <defs>
+                                    <linearGradient id="staticPremiumGrad" x1="0" y1="0" x2="40" y2="40">
+                                        <stop offset="0%" stopColor="#FF007F" />
+                                        <stop offset="50%" stopColor="#8A2BE2" />
+                                        <stop offset="100%" stopColor="#00F0FF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                         </Link>
                         <h1>Create Account</h1>
                         <p>Join 500,000+ traders worldwide</p>
@@ -156,7 +169,20 @@ export default function SignupPage() {
                     <div className="auth-card glass-card">
                         <div className="auth-header">
                             <div className="logo">
-                                <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
+                                <div className="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 0, 127, 0.6)) drop-shadow(0 0 16px rgba(0, 240, 255, 0.4))' }}>
+                                <circle cx="20" cy="20" r="18" stroke="url(#staticPremiumGrad)" strokeWidth="3" />
+                                <path d="M12 20L18 26L28 14" stroke="url(#staticPremiumGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                <defs>
+                                    <linearGradient id="staticPremiumGrad" x1="0" y1="0" x2="40" y2="40">
+                                        <stop offset="0%" stopColor="#FF007F" />
+                                        <stop offset="50%" stopColor="#8A2BE2" />
+                                        <stop offset="100%" stopColor="#00F0FF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                             </div>
                             <h1>Loading...</h1>
                         </div>

@@ -9,7 +9,7 @@ export async function getAllTasks() {
 }
 
 export async function getTaskById(id) {
-    const res = await api.get(`/tasks/?{id}/`);
+    const res = await api.get(`/tasks/${id}/`);
     return res.data || null;
 }
 
@@ -19,13 +19,13 @@ export async function createTask(task) {
 }
 
 export async function deleteTask(id) {
-    await api.del(`/tasks/?{id}/`);
+    await api.del(`/tasks/${id}/`);
 }
 
 // ─── Assignments ───────────────────────────────────────────────────────────
 
 export async function claimTask(taskId) {
-    const res = await api.post(`/tasks/?{taskId}/claim/`);
+    const res = await api.post(`/tasks/${taskId}/claim/`);
     return res.data || null;
 }
 
@@ -56,12 +56,12 @@ export async function createSubmission(assignmentId, proofUrl, notes) {
 }
 
 export async function approveSubmission(submissionId) {
-    const res = await api.post(`/submissions/?{submissionId}/approve/`);
+    const res = await api.post(`/submissions/${submissionId}/approve/`);
     return res;
 }
 
 export async function rejectSubmission(submissionId, reason) {
-    const res = await api.post(`/submissions/?{submissionId}/reject/`, { reason });
+    const res = await api.post(`/submissions/${submissionId}/reject/`, { reason });
     return res;
 }
 
@@ -85,7 +85,7 @@ export async function getAllUsers() {
 }
 
 export async function toggleUserStatus(srUserId) {
-    const res = await api.patch(`/admin/users/?{srUserId}/status/`);
+    const res = await api.patch(`/admin/users/${srUserId}/status/`);
     return res;
 }
 
@@ -126,7 +126,7 @@ export async function getNotifications() {
 }
 
 export async function markNotificationRead(id) {
-    const res = await api.post(`/notifications/?{id}/read/`);
+    const res = await api.post(`/notifications/${id}/read/`);
     return res;
 }
 

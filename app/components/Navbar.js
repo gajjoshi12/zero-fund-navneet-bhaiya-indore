@@ -37,9 +37,22 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className={`navbar ?{scrolled ? 'scrolled' : ''}`}>
+            <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
                 <div className="nav-container">
                     <Link href="/" className="logo">
+                        <div className="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 0, 127, 0.6)) drop-shadow(0 0 16px rgba(0, 240, 255, 0.4))' }}>
+                                <circle cx="20" cy="20" r="18" stroke="url(#staticPremiumGrad)" strokeWidth="3" />
+                                <path d="M12 20L18 26L28 14" stroke="url(#staticPremiumGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                <defs>
+                                    <linearGradient id="staticPremiumGrad" x1="0" y1="0" x2="40" y2="40">
+                                        <stop offset="0%" stopColor="#FF007F" />
+                                        <stop offset="50%" stopColor="#8A2BE2" />
+                                        <stop offset="100%" stopColor="#00F0FF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
                         <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                     </Link>
 
@@ -73,7 +86,7 @@ export default function Navbar() {
                     </div>
 
                     <button
-                        className={`mobile-menu-btn ?{mobileMenuOpen ? 'active' : ''}`}
+                        className={`mobile-menu-btn ${mobileMenuOpen ? 'active' : ''}`}
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         aria-label="Toggle menu"
                     >
@@ -85,7 +98,7 @@ export default function Navbar() {
             </nav>
 
             {/* Mobile Menu Overlay */}
-            <div className={`mobile-nav-menu ?{mobileMenuOpen ? 'active' : ''}`}>
+            <div className={`mobile-nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
                 <Link href="#home" className="nav-link" onClick={handleLinkClick}>Home</Link>
                 <Link href="#challenges" className="nav-link" onClick={handleLinkClick}>Challenges</Link>
                 <Link href="#how-it-works" className="nav-link" onClick={handleLinkClick}>How It Works</Link>

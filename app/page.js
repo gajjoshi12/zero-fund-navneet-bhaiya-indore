@@ -46,11 +46,11 @@ export default function Home() {
       const orb2 = document.querySelector('.bg-gradient-orb-2');
 
       if (orb1) {
-        orb1.style.transform = `translate(?{scrollY * 0.05}px, ?{scrollY * 0.1}px)`;
+        orb1.style.transform = `translate(${scrollY * 0.05}px, ${scrollY * 0.1}px)`;
       }
 
       if (orb2) {
-        orb2.style.transform = `translate(?{scrollY * -0.05}px, ?{scrollY * -0.1}px)`;
+        orb2.style.transform = `translate(${scrollY * -0.05}px, ${scrollY * -0.1}px)`;
       }
     };
 

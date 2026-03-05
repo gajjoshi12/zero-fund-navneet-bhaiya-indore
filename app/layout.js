@@ -1,6 +1,7 @@
 import { Space_Grotesk, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from './context/AuthContext';
+import SplashScreen from './components/SplashScreen';
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' });
 const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta' });
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${spaceGrotesk.variable} ${jakarta.variable} font-sans`}>
+        <SplashScreen />
         <AuthProvider>
           {/* Animated Background & Floating Elements */}
           <div className="bg-gradient-orb"></div>
