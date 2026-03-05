@@ -4,11 +4,11 @@ export default function Testimonials() {
     const testimonials = [
         {
             rating: 5,
-            text: '"TradeFund Pro changed my trading career. The evaluation process was fair, and the payout was lightning fast. I received my $15,000 profit within 24 hours!"',
+            text: '"Zero Fund Pro changed my trading career. The evaluation process was fair, and the payout was lightning fast. I received my ₹15,000 profit within 24 hours!"',
             author: {
                 initials: 'JM',
                 name: 'John M.',
-                details: '$100K Funded Trader • 🇺🇸 New York'
+                details: '₹100K Funded Trader • 🇺🇸 New York'
             }
         },
         {
@@ -17,16 +17,16 @@ export default function Testimonials() {
             author: {
                 initials: 'SM',
                 name: 'Sarah M.',
-                details: '$200K Funded Trader • 🇬🇧 London'
+                details: '₹200K Funded Trader • 🇬🇧 London'
             }
         },
         {
             rating: 5,
-            text: '"From skeptic to believer. I was hesitant at first, but after receiving my first $8,000 payout, I know this is the real deal. Highly recommend!"',
+            text: '"From skeptic to believer. I was hesitant at first, but after receiving my first ₹8,000 payout, I know this is the real deal. Highly recommend!"',
             author: {
                 initials: 'RK',
                 name: 'Robert K.',
-                details: '$50K Funded Trader • 🇨🇦 Toronto'
+                details: '₹50K Funded Trader • 🇨🇦 Toronto'
             }
         }
     ];
@@ -44,7 +44,7 @@ export default function Testimonials() {
                         <div
                             key={index}
                             className="testimonial-card glass-card animate-on-scroll"
-                            style={{ '--delay': `${index * 0.1}s` }}
+                            style={{ '--delay': `?{index * 0.1}s` }}
                         >
                             <div className="testimonial-rating">
                                 {[...Array(testimonial.rating)].map((_, i) => (

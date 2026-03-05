@@ -36,19 +36,7 @@ export default function Footer() {
                 <div className="footer-grid">
                     <div className="footer-brand">
                         <Link href="/" className="logo">
-                            <div className="logo-icon">
-                                <svg viewBox="0 0 40 40" fill="none">
-                                    <circle cx="20" cy="20" r="18" stroke="url(#footerLogoGrad)" strokeWidth="3" />
-                                    <path d="M12 20L18 26L28 14" stroke="url(#footerLogoGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                                    <defs>
-                                        <linearGradient id="footerLogoGrad" x1="0" y1="0" x2="40" y2="40">
-                                            <stop offset="0%" stopColor="#00D9FF" />
-                                            <stop offset="100%" stopColor="#7B61FF" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <span className="logo-text">TradeFund<span className="logo-highlight">Pro</span></span>
+                            <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                         </Link>
                         <p className="footer-desc">Empowering traders worldwide with funded accounts and the opportunity to keep up to 90% of their profits.</p>
                         <div className="footer-social">
@@ -105,8 +93,8 @@ export default function Footer() {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; 2026 TradeFund Pro. All rights reserved.</p>
-                    <p className="disclaimer">TradeFund Pro operates in a simulated trading environment. All accounts are demo accounts for educational and evaluation purposes only. Past performance is not indicative of future results.</p>
+                    <p>&copy; 2026 Zero Fund Pro. All rights reserved.</p>
+                    <p className="disclaimer">Zero Fund Pro operates in a simulated trading environment. All accounts are demo accounts for educational and evaluation purposes only. Past performance is not indicative of future results.</p>
                 </div>
             </div>
         </footer>

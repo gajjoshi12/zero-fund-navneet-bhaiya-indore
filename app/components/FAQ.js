@@ -44,8 +44,8 @@ export default function FAQ() {
                     {faqs.map((faq, index) => (
                         <div
                             key={index}
-                            className={`faq-item glass-card animate-on-scroll ${activeIndex === index ? 'active' : ''}`}
-                            style={{ '--delay': `${index * 0.1}s` }}
+                            className={`faq-item glass-card animate-on-scroll ?{activeIndex === index ? 'active' : ''}`}
+                            style={{ '--delay': `?{index * 0.1}s` }}
                         >
                             <button className="faq-question" onClick={() => toggleFaq(index)}>
                                 <span>{faq.question}</span>

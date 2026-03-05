@@ -29,9 +29,9 @@ export default function SMSNotifications() {
     ];
 
     const amounts = [
-        '$50', '$100', '$150', '$250', '$500',
-        '$750', '$1,000', '$1,500', '$2,500', '$5,000',
-        '$7,500', '$10,000', '$15,000', '$25,000'
+        '₹50', '₹100', '₹150', '₹250', '₹500',
+        '₹750', '₹1,000', '₹1,500', '₹2,500', '₹5,000',
+        '₹7,500', '₹10,000', '₹15,000', '₹25,000'
     ];
 
     const generateRandomNotification = useCallback(() => {
@@ -42,8 +42,8 @@ export default function SMSNotifications() {
 
         return {
             id: Date.now(),
-            sender: 'TradeFund',
-            message: `${name} ${initial}. got ${amount} credited for completing ${task}`,
+            sender: 'Zero Fund',
+            message: `?{name} ?{initial}. got ?{amount} credited for completing ?{task}`,
             time: 'now',
             visible: true
         };
@@ -94,7 +94,7 @@ export default function SMSNotifications() {
             {notifications.map((notification) => (
                 <div
                     key={notification.id}
-                    className={`sms-notification ${notification.visible ? 'visible' : ''}`}
+                    className={`sms-notification ?{notification.visible ? 'visible' : ''}`}
                 >
                     <div className="sms-header">
                         <div className="sms-icon">

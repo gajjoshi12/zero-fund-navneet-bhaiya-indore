@@ -1,287 +1,144 @@
-// Data management functions for tasks, submissions, and users
+// Data management functions — all backed by Django API
+import api from './api';
 
-// Initialize demo data
-export function initializeDemoData() {
-    // Check if already initialized
-    if (localStorage.getItem('tradefund_initialized')) return;
+// ─── Tasks ─────────────────────────────────────────────────────────────────
 
-    // Demo tasks
-    const demoTasks = [
-        {
-            id: 'task_1',
-            title: 'Complete Trading Challenge - Phase 1',
-            description: 'Achieve 8% profit target within the drawdown limits. Trade any instrument of your choice.',
-            reward: 500,
-            deadline: '2026-02-15',
-            requirements: [
-                'Minimum 5 trading days',
-                'Maximum 5% daily drawdown',
-                'Maximum 10% total drawdown',
-                '8% profit target'
-            ],
-            status: 'active',
-            createdAt: new Date().toISOString()
-        },
-        {
-            id: 'task_2',
-            title: 'Social Media Promotion',
-            description: 'Share your trading journey on social media and tag @TradeFundPro. Submit screenshot as proof.',
-            reward: 50,
-            deadline: '2026-02-01',
-            requirements: [
-                'Post on Instagram or Twitter',
-                'Tag @TradeFundPro',
-                'Include your trading stats',
-                'Minimum 100 followers'
-            ],
-            status: 'active',
-            createdAt: new Date().toISOString()
-        },
-        {
-            id: 'task_3',
-            title: 'Refer a Friend',
-            description: 'Refer a friend to join TradeFund Pro and earn bonus when they complete their first challenge.',
-            reward: 100,
-            deadline: '2026-03-01',
-            requirements: [
-                'Friend must signup using your referral link',
-                'Friend must complete a challenge',
-                'Provide friend email and signup proof'
-            ],
-            status: 'active',
-            createdAt: new Date().toISOString()
-        },
-        {
-            id: 'task_4',
-            title: 'Video Testimonial',
-            description: 'Record a 1-2 minute video testimonial about your experience with TradeFund Pro.',
-            reward: 150,
-            deadline: '2026-02-28',
-            requirements: [
-                'Video must be 1-2 minutes long',
-                'Good audio and video quality',
-                'Share your genuine experience',
-                'Face must be visible'
-            ],
-            status: 'active',
-            createdAt: new Date().toISOString()
-        }
-    ];
-
-    localStorage.setItem('tradefund_tasks', JSON.stringify(demoTasks));
-    localStorage.setItem('tradefund_initialized', 'true');
+export async function getAllTasks() {
+    const res = await api.get('/tasks/');
+    return res.data || [];
 }
 
-// Task functions
-export function getAllTasks() {
-    return JSON.parse(localStorage.getItem('tradefund_tasks') || '[]');
+export async function getTaskById(id) {
+    const res = await api.get(`/tasks/?{id}/`);
+    return res.data || null;
 }
 
-export function getTaskById(id) {
-    const tasks = getAllTasks();
-    return tasks.find(t => t.id === id);
+export async function createTask(task) {
+    const res = await api.post('/tasks/', task);
+    return res.data || null;
 }
 
-export function createTask(task) {
-    const tasks = getAllTasks();
-    const newTask = {
-        ...task,
-        id: `task_${Date.now()}`,
-        status: 'active',
-        createdAt: new Date().toISOString()
-    };
-    tasks.push(newTask);
-    localStorage.setItem('tradefund_tasks', JSON.stringify(tasks));
-    return newTask;
+export async function deleteTask(id) {
+    await api.del(`/tasks/?{id}/`);
 }
 
-export function updateTask(id, updates) {
-    const tasks = getAllTasks();
-    const index = tasks.findIndex(t => t.id === id);
-    if (index !== -1) {
-        tasks[index] = { ...tasks[index], ...updates };
-        localStorage.setItem('tradefund_tasks', JSON.stringify(tasks));
-        return tasks[index];
-    }
-    return null;
+// ─── Assignments ───────────────────────────────────────────────────────────
+
+export async function claimTask(taskId) {
+    const res = await api.post(`/tasks/?{taskId}/claim/`);
+    return res.data || null;
 }
 
-export function deleteTask(id) {
-    const tasks = getAllTasks();
-    const filtered = tasks.filter(t => t.id !== id);
-    localStorage.setItem('tradefund_tasks', JSON.stringify(filtered));
+export async function getUserAssignments() {
+    const res = await api.get('/assignments/');
+    return res.data || [];
 }
 
-// User task assignments
-export function assignTaskToUser(taskId, userId) {
-    const assignments = JSON.parse(localStorage.getItem('tradefund_assignments') || '[]');
-    const existing = assignments.find(a => a.taskId === taskId && a.userId === userId);
-
-    if (!existing) {
-        const newAssignment = {
-            id: `assign_${Date.now()}`,
-            taskId,
-            userId,
-            status: 'pending', // pending, in_progress, submitted, completed, rejected
-            assignedAt: new Date().toISOString()
-        };
-        assignments.push(newAssignment);
-        localStorage.setItem('tradefund_assignments', JSON.stringify(assignments));
-        return newAssignment;
-    }
-    return existing;
+export async function adminAssignTask(taskId, srUserId) {
+    const res = await api.post('/assignments/assign/', { task_id: taskId, sr_user_id: srUserId });
+    return res.data || null;
 }
 
-export function getUserAssignments(userId) {
-    const assignments = JSON.parse(localStorage.getItem('tradefund_assignments') || '[]');
-    return assignments.filter(a => a.userId === userId);
+// ─── Submissions ───────────────────────────────────────────────────────────
+
+export async function getAllSubmissions() {
+    const res = await api.get('/submissions/');
+    return res.data || [];
 }
 
-export function getAllAssignments() {
-    return JSON.parse(localStorage.getItem('tradefund_assignments') || '[]');
-}
-
-export function updateAssignment(id, updates) {
-    const assignments = JSON.parse(localStorage.getItem('tradefund_assignments') || '[]');
-    const index = assignments.findIndex(a => a.id === id);
-    if (index !== -1) {
-        assignments[index] = { ...assignments[index], ...updates };
-        localStorage.setItem('tradefund_assignments', JSON.stringify(assignments));
-        return assignments[index];
-    }
-    return null;
-}
-
-// Submissions
-export function createSubmission(assignmentId, userId, taskId, proofUrl, notes) {
-    const submissions = JSON.parse(localStorage.getItem('tradefund_submissions') || '[]');
-    const newSubmission = {
-        id: `sub_${Date.now()}`,
-        assignmentId,
-        userId,
-        taskId,
-        proofUrl,
-        notes,
-        status: 'pending', // pending, approved, rejected
-        submittedAt: new Date().toISOString()
-    };
-    submissions.push(newSubmission);
-    localStorage.setItem('tradefund_submissions', JSON.stringify(submissions));
-
-    // Update assignment status
-    updateAssignment(assignmentId, { status: 'submitted' });
-
-    return newSubmission;
-}
-
-export function getUserSubmissions(userId) {
-    const submissions = JSON.parse(localStorage.getItem('tradefund_submissions') || '[]');
-    return submissions.filter(s => s.userId === userId);
-}
-
-export function getAllSubmissions() {
-    return JSON.parse(localStorage.getItem('tradefund_submissions') || '[]');
-}
-
-export function updateSubmission(id, updates) {
-    const submissions = JSON.parse(localStorage.getItem('tradefund_submissions') || '[]');
-    const index = submissions.findIndex(s => s.id === id);
-    if (index !== -1) {
-        submissions[index] = { ...submissions[index], ...updates };
-        localStorage.setItem('tradefund_submissions', JSON.stringify(submissions));
-        return submissions[index];
-    }
-    return null;
-}
-
-export function approveSubmission(submissionId) {
-    const submission = updateSubmission(submissionId, {
-        status: 'approved',
-        reviewedAt: new Date().toISOString()
+export async function createSubmission(assignmentId, proofUrl, notes) {
+    const res = await api.post('/submissions/', {
+        assignment_id: assignmentId,
+        proof_url: proofUrl,
+        notes: notes,
     });
-
-    if (submission) {
-        // Update assignment status
-        updateAssignment(submission.assignmentId, { status: 'completed' });
-
-        // Add reward to user balance
-        const task = getTaskById(submission.taskId);
-        if (task) {
-            const users = JSON.parse(localStorage.getItem('tradefund_users') || '[]');
-            const userIndex = users.findIndex(u => u.id === submission.userId);
-            if (userIndex !== -1) {
-                users[userIndex].balance = (users[userIndex].balance || 0) + task.reward;
-                users[userIndex].totalEarnings = (users[userIndex].totalEarnings || 0) + task.reward;
-                localStorage.setItem('tradefund_users', JSON.stringify(users));
-            }
-        }
-    }
-
-    return submission;
+    return res.data || null;
 }
 
-export function rejectSubmission(submissionId, reason) {
-    const submission = updateSubmission(submissionId, {
-        status: 'rejected',
-        rejectionReason: reason,
-        reviewedAt: new Date().toISOString()
+export async function approveSubmission(submissionId) {
+    const res = await api.post(`/submissions/?{submissionId}/approve/`);
+    return res;
+}
+
+export async function rejectSubmission(submissionId, reason) {
+    const res = await api.post(`/submissions/?{submissionId}/reject/`, { reason });
+    return res;
+}
+
+// ─── Stats ─────────────────────────────────────────────────────────────────
+
+export async function getAdminStats() {
+    const res = await api.get('/stats/admin/');
+    return res.data || {};
+}
+
+export async function getUserStats() {
+    const res = await api.get('/stats/user/');
+    return res.data || {};
+}
+
+// ─── Admin User Management ─────────────────────────────────────────────────
+
+export async function getAllUsers() {
+    const res = await api.get('/admin/users/');
+    return res.data || [];
+}
+
+export async function toggleUserStatus(srUserId) {
+    const res = await api.patch(`/admin/users/?{srUserId}/status/`);
+    return res;
+}
+
+// ─── MT5 ───────────────────────────────────────────────────────────────────
+
+export async function getGroupList() {
+    const res = await api.get('/groups/');
+    return res.data || [];
+}
+
+export async function createMT5Account(group, leverage, mainPassword, investorPassword) {
+    const res = await api.post('/mt5/create/', {
+        group,
+        leverage,
+        main_password: mainPassword,
+        investor_password: investorPassword,
     });
-
-    if (submission) {
-        updateAssignment(submission.assignmentId, { status: 'rejected' });
-    }
-
-    return submission;
+    return res;
 }
 
-// User functions
-export function getAllUsers() {
-    return JSON.parse(localStorage.getItem('tradefund_users') || '[]');
+// ─── Funded Accounts ───────────────────────────────────────────────────────
+
+export async function getFundedAccounts() {
+    const res = await api.get('/funded-accounts/');
+    return res.data || [];
 }
 
-export function getUserById(id) {
-    const users = getAllUsers();
-    return users.find(u => u.id === id);
+export async function saveFundedAccount(data) {
+    const res = await api.post('/funded-accounts/', data);
+    return res;
 }
 
-export function updateUserStatus(userId, status) {
-    const users = getAllUsers();
-    const index = users.findIndex(u => u.id === userId);
-    if (index !== -1) {
-        users[index].status = status;
-        localStorage.setItem('tradefund_users', JSON.stringify(users));
-        return users[index];
-    }
-    return null;
+// ─── Notifications ─────────────────────────────────────────────────────────
+
+export async function getNotifications() {
+    const res = await api.get('/notifications/');
+    return res;
 }
 
-// Stats
-export function getAdminStats() {
-    const users = getAllUsers();
-    const tasks = getAllTasks();
-    const submissions = getAllSubmissions();
-    const assignments = getAllAssignments();
-
-    return {
-        totalUsers: users.length,
-        activeTasks: tasks.filter(t => t.status === 'active').length,
-        pendingSubmissions: submissions.filter(s => s.status === 'pending').length,
-        completedTasks: assignments.filter(a => a.status === 'completed').length,
-        totalPaidOut: users.reduce((sum, u) => sum + (u.totalEarnings || 0), 0)
-    };
+export async function markNotificationRead(id) {
+    const res = await api.post(`/notifications/?{id}/read/`);
+    return res;
 }
 
-export function getUserStats(userId) {
-    const assignments = getUserAssignments(userId);
-    const submissions = getUserSubmissions(userId);
-    const user = getUserById(userId);
-
-    return {
-        assignedTasks: assignments.length,
-        completedTasks: assignments.filter(a => a.status === 'completed').length,
-        pendingTasks: assignments.filter(a => a.status === 'pending' || a.status === 'in_progress').length,
-        submittedTasks: submissions.length,
-        balance: user?.balance || 0,
-        totalEarnings: user?.totalEarnings || 0
-    };
+export async function markAllNotificationsRead() {
+    const res = await api.post('/notifications/read-all/');
+    return res;
 }
+
+// ─── Profile ───────────────────────────────────────────────────────────────
+
+export async function updateProfile(data) {
+    const res = await api.patch('/profile/update/', data);
+    return res;
+}
+

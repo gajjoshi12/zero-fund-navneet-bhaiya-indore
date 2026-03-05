@@ -19,7 +19,7 @@ export default function LoginPage() {
         setError('');
         setLoading(true);
 
-        const result = login(email, password);
+        const result = await login(email, password);
 
         if (result.success) {
             if (result.user.role === 'admin') {
@@ -40,19 +40,7 @@ export default function LoginPage() {
                 <div className="auth-card glass-card">
                     <div className="auth-header">
                         <Link href="/" className="logo">
-                            <div className="logo-icon">
-                                <svg viewBox="0 0 40 40" fill="none">
-                                    <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" strokeWidth="3" />
-                                    <path d="M12 20L18 26L28 14" stroke="url(#logoGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                                    <defs>
-                                        <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
-                                            <stop offset="0%" stopColor="#00D9FF" />
-                                            <stop offset="100%" stopColor="#7B61FF" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <span className="logo-text">TradeFund<span className="logo-highlight">Pro</span></span>
+                            <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                         </Link>
                         <h1>Welcome Back</h1>
                         <p>Sign in to access your dashboard</p>
@@ -92,18 +80,6 @@ export default function LoginPage() {
 
                     <div className="auth-footer">
                         <p>Don't have an account? <Link href="/auth/signup">Sign Up</Link></p>
-                    </div>
-
-                    <div className="demo-credentials">
-                        <p className="demo-title">Demo Credentials:</p>
-                        <div className="demo-info">
-                            <div>
-                                <strong>Admin:</strong> admin@tradefund.com / admin123
-                            </div>
-                            <div>
-                                <strong>User:</strong> demo@tradefund.com / demo123
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

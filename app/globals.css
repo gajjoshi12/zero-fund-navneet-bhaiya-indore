@@ -1,53 +1,55 @@
 /* ============================================
-   TradeFund Pro - Premium Trading Platform CSS
+   Zero Fund Pro - Premium Trading Platform CSS
    ============================================ */
 
 /* CSS Variables */
 :root {
-  /* Colors - Premium Dark Theme */
-  --bg-primary: #06061e;
-  --bg-secondary: #0a0a2e;
-  --bg-tertiary: #0d0d3a;
-  --bg-card: rgba(15, 15, 50, 0.6);
-  --bg-card-hover: rgba(20, 20, 60, 0.8);
+  /* Colors - Ultra Premium Dark Theme */
+  --bg-primary: #02020a;
+  --bg-secondary: #050514;
+  --bg-tertiary: #0a0a24;
+  --bg-card: rgba(10, 10, 30, 0.4);
+  --bg-card-hover: rgba(15, 15, 45, 0.6);
 
-  /* Accent Colors */
-  --accent-cyan: #00D9FF;
-  --accent-purple: #7B61FF;
-  --accent-pink: #FF61DC;
-  --accent-green: #00FF88;
-  --accent-orange: #FF8C00;
+  /* Accent Colors - Vivid & Neon */
+  --accent-cyan: #00F0FF;
+  --accent-purple: #8A2BE2;
+  --accent-pink: #FF007F;
+  --accent-green: #00FFAA;
+  --accent-orange: #FF5500;
 
   /* Gradient */
-  --gradient-primary: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+  --gradient-primary: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 50%, var(--accent-pink) 100%);
   --gradient-hover: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-cyan) 100%);
   --gradient-text: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
 
   /* Text Colors */
   --text-primary: #FFFFFF;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-tertiary: rgba(255, 255, 255, 0.5);
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --text-tertiary: rgba(255, 255, 255, 0.55);
   --text-muted: rgba(255, 255, 255, 0.4);
 
   /* Border */
-  --border-glass: rgba(255, 255, 255, 0.1);
-  --border-accent: rgba(0, 217, 255, 0.3);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-accent: rgba(0, 240, 255, 0.25);
+  --border-glow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 
   /* Shadows */
-  --shadow-glow: 0 0 40px rgba(0, 217, 255, 0.15);
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --shadow-button: 0 4px 20px rgba(0, 217, 255, 0.3);
+  --shadow-glow: 0 0 40px rgba(138, 43, 226, 0.2);
+  --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  --shadow-button: 0 8px 30px rgba(0, 240, 255, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  --shadow-hover: 0 15px 50px rgba(0, 240, 255, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3);
 
   /* Spacing */
   --container-max: 1400px;
-  --section-padding: 100px;
-  --card-radius: 24px;
-  --button-radius: 12px;
+  --section-padding: 120px;
+  --card-radius: 28px;
+  --button-radius: 14px;
 
   /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-medium: 0.3s ease;
-  --transition-slow: 0.5s ease;
+  --transition-fast: 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-medium: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* Reset & Base Styles */
@@ -64,12 +66,23 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-jakarta), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.outfit-font {
+  font-family: var(--font-space), sans-serif;
+  letter-spacing: -0.02em;
 }
 
 /* Custom Scrollbar */
@@ -152,6 +165,64 @@ body {
   }
 }
 
+/* Super Attractive Floating Background Elements */
+.floating-shape {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+  animation: floatBackground 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.4;
+}
+
+.shape-1 {
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+  top: -10%;
+  left: -10%;
+  animation-duration: 25s;
+}
+
+.shape-2 {
+  width: 30vw;
+  height: 30vw;
+  background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%);
+  bottom: -10%;
+  right: -5%;
+  animation-duration: 22s;
+  animation-direction: alternate-reverse;
+}
+
+.shape-3 {
+  width: 25vw;
+  height: 25vw;
+  background: radial-gradient(circle, var(--accent-pink) 0%, transparent 70%);
+  top: 40%;
+  left: 40%;
+  animation-duration: 28s;
+  opacity: 0.3;
+}
+
+@keyframes floatBackground {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) rotate(10deg) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) rotate(-5deg) scale(0.95);
+  }
+
+  100% {
+    transform: translate(10px, -30px) rotate(5deg) scale(1.05);
+  }
+}
+
 /* ============================================
    Glass Card Effect
    ============================================ */
@@ -187,6 +258,12 @@ h6 {
   letter-spacing: -0.02em;
 }
 
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
 .gradient-text {
   background: var(--gradient-text);
   -webkit-background-clip: text;
@@ -209,7 +286,7 @@ h6 {
 }
 
 /* ============================================
-   Buttons
+   Buttons Premium
    ============================================ */
 
 .btn {
@@ -227,6 +304,7 @@ h6 {
   border: none;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 .btn svg {
@@ -245,9 +323,26 @@ h6 {
   box-shadow: var(--shadow-button);
 }
 
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  z-index: -1;
+  transition: left 0.7s ease-in-out;
+}
+
+.btn-primary:hover::before {
+  left: 200%;
+}
+
 .btn-primary:hover {
-  box-shadow: 0 6px 30px rgba(0, 217, 255, 0.4);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px) scale(1.02);
 }
 
 .btn-gradient {
@@ -5390,5 +5485,1150 @@ h6 {
 
   .tc-checkbox .checkbox-label {
     font-size: 13px;
+  }
+}
+
+
+/* ============================================
+   Toast Notifications
+   ============================================ */
+
+.toast-notification {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  animation: toastIn 0.4s ease;
+  backdrop-filter: blur(20px);
+}
+
+.toast-notification.success {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.25), rgba(0, 217, 255, 0.15));
+  border: 1px solid rgba(0, 255, 136, 0.4);
+}
+
+.toast-notification.error {
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.25), rgba(255, 80, 80, 0.15));
+  border: 1px solid rgba(255, 80, 80, 0.4);
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* ============================================
+   Notification Bell & Dropdown
+   ============================================ */
+
+.header-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notification-bell {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.notification-bell:hover {
+  color: var(--accent-cyan);
+}
+
+.notification-bell svg {
+  width: 22px;
+  height: 22px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #FF4444, #FF61DC);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+.admin-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  color: #fff;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: 70px;
+  left: 16px;
+  right: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1002;
+  padding: 0;
+  border: 1px solid var(--border-accent);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.notifications-header h4 {
+  font-size: 16px;
+}
+
+.mark-all-read {
+  background: none;
+  border: none;
+  color: var(--accent-cyan);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.notifications-list {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 20px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.notification-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.notification-item.unread {
+  background: rgba(0, 217, 255, 0.05);
+  border-left: 3px solid var(--accent-cyan);
+  padding-left: 17px;
+}
+
+.notification-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.notification-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.notification-message {
+  font-size: 13px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notification-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.notification-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+
+/* ============================================
+   Dashboard Mobile Toggle
+   ============================================ */
+
+.dashboard-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .dashboard-toggle {
+    display: flex;
+  }
+}
+
+
+/* ============================================
+   Funded Accounts
+   ============================================ */
+
+.funded-accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 24px;
+}
+
+.funded-account-card {
+  padding: 28px;
+}
+
+.funded-account-card:hover {
+  transform: translateY(-4px);
+}
+
+.funded-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.funded-card-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(0, 217, 255, 0.15);
+  color: var(--accent-cyan);
+}
+
+.funded-card-size {
+  font-size: 36px;
+  font-weight: 800;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+}
+
+.funded-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.funded-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.funded-detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+.detail-value-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.highlight-value {
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.copy-btn-sm {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: background var(--transition-fast);
+}
+
+.copy-btn-sm:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.copy-btn-sm.copied {
+  color: var(--accent-green);
+}
+
+.account-status-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.account-status-badge.active {
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--accent-green);
+}
+
+.account-status-badge.breached {
+  background: rgba(255, 80, 80, 0.15);
+  color: #FF5050;
+}
+
+.account-status-badge.completed {
+  background: rgba(0, 217, 255, 0.15);
+  color: var(--accent-cyan);
+}
+
+.account-status-badge.suspended {
+  background: rgba(255, 140, 0, 0.15);
+  color: var(--accent-orange);
+}
+
+
+/* Funded Accounts Mini Preview (Overview tab) */
+
+.funded-accounts-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.funded-account-mini {
+  padding: 20px;
+}
+
+.funded-account-mini:hover {
+  transform: translateY(-2px);
+}
+
+.account-mini-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.account-mini-size {
+  font-size: 22px;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.account-mini-details {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+
+/* ============================================
+   Profile Page
+   ============================================ */
+
+.profile-section {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+}
+
+.profile-card {
+  padding: 32px;
+}
+
+.profile-card:hover {
+  transform: none;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.profile-avatar-large {
+  width: 80px;
+  height: 80px;
+  border-radius: 24px;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.profile-info h2 {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.profile-info p {
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+.profile-role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(123, 97, 255, 0.15);
+  color: var(--accent-purple);
+  margin-top: 8px;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.profile-stats-card {
+  padding: 28px;
+  height: fit-content;
+}
+
+.profile-stats-card:hover {
+  transform: none;
+}
+
+.profile-stats-card h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.profile-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.profile-stat-row:last-child {
+  border-bottom: none;
+}
+
+.profile-stat-row span {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.profile-stat-row strong {
+  font-size: 14px;
+  color: var(--accent-cyan);
+}
+
+
+/* ============================================
+   Admin-specific Styles
+   ============================================ */
+
+.dashboard-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.users-table,
+.admin-accounts-table {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.users-table:hover,
+.admin-accounts-table:hover {
+  transform: none;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 0.8fr 0.8fr;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.admin-accounts-table .table-header {
+  grid-template-columns: 1fr 1fr 0.8fr 0.7fr 0.7fr 0.7fr 0.8fr;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 0.8fr 0.8fr;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 14px;
+  align-items: center;
+  transition: background var(--transition-fast);
+}
+
+.admin-accounts-table .table-row {
+  grid-template-columns: 1fr 1fr 0.8fr 0.7fr 0.7fr 0.7fr 0.8fr;
+}
+
+.table-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.table-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-fast);
+}
+
+.btn-action.activate {
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--accent-green);
+}
+
+.btn-action.deactivate {
+  background: rgba(255, 140, 0, 0.15);
+  color: var(--accent-orange);
+}
+
+.btn-action:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.user-status {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.user-status.active {
+  color: var(--accent-green);
+}
+
+.user-status.inactive {
+  color: var(--accent-orange);
+}
+
+
+/* Admin Task Card */
+
+.admin-task-card {
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.task-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-glass);
+}
+
+.task-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-top: 12px;
+}
+
+
+/* Button variants */
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 13px;
+}
+
+.btn-danger {
+  background: rgba(255, 80, 80, 0.2);
+  color: #FF5050;
+  border: 1px solid rgba(255, 80, 80, 0.3);
+}
+
+.btn-danger:hover {
+  background: rgba(255, 80, 80, 0.35);
+  border-color: #FF5050;
+}
+
+.btn-success {
+  background: rgba(0, 255, 136, 0.2);
+  color: var(--accent-green);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.btn-success:hover {
+  background: rgba(0, 255, 136, 0.35);
+  border-color: var(--accent-green);
+}
+
+
+/* ============================================
+   Modal
+   ============================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 0;
+  animation: modalIn 0.3s ease;
+}
+
+.modal:hover {
+  transform: none;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.modal-header h2 {
+  font-size: 20px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 28px;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 8px;
+  transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.task-form,
+.assign-form {
+  padding: 24px 28px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 16px;
+}
+
+
+/* ============================================
+   Submission Cards (Admin)
+   ============================================ */
+
+.submissions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.submission-card {
+  padding: 24px;
+}
+
+.submission-card:hover {
+  transform: translateY(-2px);
+}
+
+.submission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.submission-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.submission-user-info .user-email {
+  display: block;
+}
+
+.submission-status {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.submission-status.pending {
+  background: rgba(255, 140, 0, 0.15);
+  color: var(--accent-orange);
+}
+
+.submission-status.approved {
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--accent-green);
+}
+
+.submission-status.rejected {
+  background: rgba(255, 80, 80, 0.15);
+  color: #FF5050;
+}
+
+.submission-task h4 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.submission-proof,
+.submission-notes {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+}
+
+.submission-proof h5,
+.submission-notes h5 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+
+.proof-link {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.proof-link:hover {
+  text-decoration: underline;
+}
+
+.submission-notes p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.submission-meta {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.submission-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-glass);
+}
+
+.rejection-reason {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 80, 80, 0.08);
+  border-radius: 12px;
+  font-size: 14px;
+  color: #FF8888;
+  border: 1px solid rgba(255, 80, 80, 0.15);
+}
+
+.submissions-table {
+  padding: 0;
+}
+
+.submissions-table:hover {
+  transform: none;
+}
+
+.submission-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.submission-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.submission-user {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.submission-task {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.empty-message {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+.empty-state {
+  padding: 60px 32px;
+  text-align: center;
+}
+
+.empty-state:hover {
+  transform: none;
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  stroke: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+
+/* ============================================
+   Earnings Tab
+   ============================================ */
+
+.earnings-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.earnings-card {
+  padding: 28px;
+  text-align: center;
+}
+
+.earnings-card:hover {
+  transform: translateY(-2px);
+}
+
+.earnings-card h3 {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.earnings-amount {
+  font-size: 36px;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.withdrawal-section {
+  padding: 32px;
+}
+
+.withdrawal-section:hover {
+  transform: none;
+}
+
+.withdrawal-section h2 {
+  margin-bottom: 8px;
+}
+
+.withdrawal-section p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.withdrawal-form {
+  display: flex;
+  gap: 12px;
+  max-width: 400px;
+}
+
+.withdrawal-input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-size: 15px;
+  outline: none;
+}
+
+.withdrawal-input:focus {
+  border-color: var(--accent-cyan);
+}
+
+
+/* ============================================
+   Dashboard Content Shared Styles
+   ============================================ */
+
+.dashboard-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.dashboard-section {
+  margin-top: 32px;
+}
+
+.balance-card {
+  padding: 32px;
+  text-align: center;
+}
+
+.balance-card:hover {
+  transform: none;
+}
+
+.balance-amount {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.balance-amount .currency {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.balance-amount .amount {
+  font-size: 48px;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.balance-label {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin: 12px 0 24px;
+}
+
+
+/* ============================================
+   Mobile Responsive (profile, admin, funded accounts)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .profile-section {
+    grid-template-columns: 1fr;
+  }
+
+  .funded-accounts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .table-header,
+  .table-row {
+    font-size: 12px;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .users-table .table-header,
+  .users-table .table-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .users-table .table-header span:nth-child(3),
+  .users-table .table-row span:nth-child(3),
+  .users-table .table-header span:nth-child(4),
+  .users-table .table-row span:nth-child(4) {
+    display: none;
+  }
+
+  .admin-accounts-table .table-header,
+  .admin-accounts-table .table-row {
+    grid-template-columns: 1fr 1fr 0.8fr 0.8fr;
+  }
+
+  .admin-accounts-table .table-header span:nth-child(4),
+  .admin-accounts-table .table-row span:nth-child(4),
+  .admin-accounts-table .table-header span:nth-child(5),
+  .admin-accounts-table .table-row span:nth-child(5),
+  .admin-accounts-table .table-header span:nth-child(7),
+  .admin-accounts-table .table-row span:nth-child(7) {
+    display: none;
+  }
+
+  .dashboard-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .funded-card-size {
+    font-size: 28px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .toast-notification {
+    left: 16px;
+    right: 16px;
+    top: auto;
+    bottom: 24px;
   }
 }

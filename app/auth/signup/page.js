@@ -9,6 +9,7 @@ function SignupForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [country, setCountry] = useState('India');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
@@ -35,10 +36,9 @@ function SignupForm() {
 
         setLoading(true);
 
-        const result = signup(name, email, password, phone);
+        const result = await signup(name, email, password, phone, country);
 
         if (result.success) {
-            // Redirect to the specified URL or dashboard
             router.push(redirectUrl || '/dashboard');
         } else {
             setError(result.error);
@@ -53,19 +53,7 @@ function SignupForm() {
                 <div className="auth-card glass-card">
                     <div className="auth-header">
                         <Link href="/" className="logo">
-                            <div className="logo-icon">
-                                <svg viewBox="0 0 40 40" fill="none">
-                                    <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" strokeWidth="3" />
-                                    <path d="M12 20L18 26L28 14" stroke="url(#logoGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                                    <defs>
-                                        <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
-                                            <stop offset="0%" stopColor="#00D9FF" />
-                                            <stop offset="100%" stopColor="#7B61FF" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <span className="logo-text">TradeFund<span className="logo-highlight">Pro</span></span>
+                            <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                         </Link>
                         <h1>Create Account</h1>
                         <p>Join 500,000+ traders worldwide</p>
@@ -106,6 +94,18 @@ function SignupForm() {
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 placeholder="Enter your phone number"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="country">Country</label>
+                            <input
+                                type="text"
+                                id="country"
+                                value={country}
+                                onChange={(e) => setCountry(e.target.value)}
+                                placeholder="Enter your country"
                                 required
                             />
                         </div>
@@ -156,19 +156,7 @@ export default function SignupPage() {
                     <div className="auth-card glass-card">
                         <div className="auth-header">
                             <div className="logo">
-                                <div className="logo-icon">
-                                    <svg viewBox="0 0 40 40" fill="none">
-                                        <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" strokeWidth="3" />
-                                        <path d="M12 20L18 26L28 14" stroke="url(#logoGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                                        <defs>
-                                            <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
-                                                <stop offset="0%" stopColor="#00D9FF" />
-                                                <stop offset="100%" stopColor="#7B61FF" />
-                                            </linearGradient>
-                                        </defs>
-                                    </svg>
-                                </div>
-                                <span className="logo-text">TradeFund<span className="logo-highlight">Pro</span></span>
+                                <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                             </div>
                             <h1>Loading...</h1>
                         </div>

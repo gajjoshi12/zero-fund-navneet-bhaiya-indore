@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../../context/AuthContext';
+import { createMT5Account, saveFundedAccount } from '../../lib/data';
 
 function PurchaseContent() {
     const { user, loading } = useAuth();
@@ -11,7 +12,7 @@ function PurchaseContent() {
     const searchParams = useSearchParams();
 
     // Get plan details from URL params
-    const planSize = searchParams.get('size') || '$50,000';
+    const planSize = searchParams.get('size') || '₹50,000';
     const planPrice = searchParams.get('price') || '24,999';
     const planType = searchParams.get('type') || '1-step';
     const profitSplit = searchParams.get('split') || '85%';
@@ -27,6 +28,7 @@ function PurchaseContent() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [credentials, setCredentials] = useState(null);
     const [copied, setCopied] = useState('');
+    const [mt5Error, setMt5Error] = useState('');
     const [showTCModal, setShowTCModal] = useState(true);
     const [tcAccepted, setTcAccepted] = useState(false);
 
@@ -39,27 +41,19 @@ function PurchaseContent() {
             if (planType) currentParams.set('type', planType);
             if (profitSplit) currentParams.set('split', profitSplit);
 
-            const purchaseUrl = `/dashboard/purchase?${currentParams.toString()}`;
-            router.push(`/auth/signup?redirect=${encodeURIComponent(purchaseUrl)}`);
+            const purchaseUrl = `/dashboard/purchase??{currentParams.toString()}`;
+            router.push(`/auth/signup?redirect=?{encodeURIComponent(purchaseUrl)}`);
         }
     }, [user, loading, router, planSize, planPrice, planType, profitSplit]);
 
-    // Generate random credentials
-    const generateCredentials = () => {
-        const demoId = Math.floor(100000 + Math.random() * 900000).toString();
-        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+    // Generate passwords for MT5 account
+    const generatePassword = () => {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#';
         let password = '';
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 10; i++) {
             password += chars.charAt(Math.floor(Math.random() * chars.length));
         }
-        return {
-            server: accountType === 'mt5' ? 'TradeFundPro-MT5' : 'TradeFundPro-MT4',
-            demoId: demoId,
-            password: password,
-            accountType: accountType.toUpperCase(),
-            accountSize: planSize,
-            profitSplit: profitSplit
-        };
+        return password;
     };
 
     const handleAccountSelect = (type) => {
@@ -81,14 +75,90 @@ function PurchaseContent() {
     const handlePaymentSubmit = async (e) => {
         e.preventDefault();
         setIsProcessing(true);
+        setMt5Error('');
 
-        // Simulate payment processing
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // Simulate payment processing delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
 
-        const creds = generateCredentials();
-        setCredentials(creds);
-        setIsProcessing(false);
+        const mainPass = generatePassword();
+        const investorPass = generatePassword();
+
+        // Try real MT5 account creation via SR Global FX API
+        try {
+            const result = await createMT5Account(
+                'SR\\STANDARD',
+                '100',
+                mainPass,
+                investorPass
+            );
+
+            if (result.status === 200) {
+                const creds = {
+                    server: 'SRGlobalFX-Live',
+                    loginId: result.data?.login || result.data?.mt5_login || 'Check email',
+                    mainPassword: mainPass,
+                    investorPassword: investorPass,
+                    accountType: 'MT5',
+                    accountSize: planSize,
+                    profitSplit: profitSplit,
+                    isLive: true,
+                };
+                setCredentials(creds);
+                setCurrentStep(3);
+
+                // Save funded account to backend
+                try {
+                    await saveFundedAccount({
+                        server: creds.server,
+                        login_id: String(creds.loginId),
+                        account_type: creds.accountType,
+                        account_size: planSize,
+                        plan_type: planType,
+                        profit_split: profitSplit,
+                        price_paid: planPrice,
+                        leverage: '1:100',
+                        is_live: true,
+                    });
+                } catch (e) { console.error('Failed to save funded account:', e); }
+
+                setIsProcessing(false);
+                return;
+            }
+        } catch (err) {
+            console.log('MT5 API unavailable, using demo credentials');
+        }
+
+        // Fallback: show demo credentials if API fails
+        const demoId = Math.floor(100000 + Math.random() * 900000).toString();
+        const demoCreds = {
+            server: 'SRGlobalFX-Live',
+            loginId: demoId,
+            mainPassword: mainPass,
+            investorPassword: investorPass,
+            accountType: 'MT5',
+            accountSize: planSize,
+            profitSplit: profitSplit,
+            isLive: false,
+        };
+        setCredentials(demoCreds);
         setCurrentStep(3);
+
+        // Save demo account to backend too
+        try {
+            await saveFundedAccount({
+                server: 'SRGlobalFX-Live',
+                login_id: demoId,
+                account_type: 'MT5',
+                account_size: planSize,
+                plan_type: planType,
+                profit_split: profitSplit,
+                price_paid: planPrice,
+                leverage: '1:100',
+                is_live: false,
+            });
+        } catch (e) { console.error('Failed to save funded account:', e); }
+
+        setIsProcessing(false);
     };
 
     const handleCopy = (text, field) => {
@@ -144,7 +214,7 @@ function PurchaseContent() {
                                 <ul>
                                     <li>Profit split as specified in your selected plan</li>
                                     <li>Payouts processed within 24-48 hours</li>
-                                    <li>Minimum payout threshold: $100</li>
+                                    <li>Minimum payout threshold: ₹100</li>
                                     <li>All profits are yours to keep after the split</li>
                                 </ul>
                             </div>
@@ -202,7 +272,7 @@ function PurchaseContent() {
                             </label>
 
                             <button
-                                className={`btn btn-gradient btn-lg btn-block ${!tcAccepted ? 'disabled' : ''}`}
+                                className={`btn btn-gradient btn-lg btn-block ?{!tcAccepted ? 'disabled' : ''}`}
                                 onClick={handleAcceptTC}
                                 disabled={!tcAccepted}
                             >
@@ -220,39 +290,27 @@ function PurchaseContent() {
                 {/* Header */}
                 <div className="purchase-header">
                     <Link href="/" className="logo">
-                        <div className="logo-icon">
-                            <svg viewBox="0 0 40 40" fill="none">
-                                <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" strokeWidth="3" />
-                                <path d="M12 20L18 26L28 14" stroke="url(#logoGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                                <defs>
-                                    <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
-                                        <stop offset="0%" stopColor="#00D9FF" />
-                                        <stop offset="100%" stopColor="#7B61FF" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </div>
-                        <span className="logo-text">TradeFund<span className="logo-highlight">Pro</span></span>
+                        <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                     </Link>
                 </div>
 
                 {/* Progress Steps */}
                 <div className="purchase-steps">
-                    <div className={`step ${currentStep >= 1 ? 'active' : ''} ${currentStep > 1 ? 'completed' : ''}`}>
+                    <div className={`step ?{currentStep >= 1 ? 'active' : ''} ?{currentStep > 1 ? 'completed' : ''}`}>
                         <div className="step-number">
                             {currentStep > 1 ? '✓' : '1'}
                         </div>
                         <span className="step-label">Platform</span>
                     </div>
                     <div className="step-line"></div>
-                    <div className={`step ${currentStep >= 2 ? 'active' : ''} ${currentStep > 2 ? 'completed' : ''}`}>
+                    <div className={`step ?{currentStep >= 2 ? 'active' : ''} ?{currentStep > 2 ? 'completed' : ''}`}>
                         <div className="step-number">
                             {currentStep > 2 ? '✓' : '2'}
                         </div>
                         <span className="step-label">Payment</span>
                     </div>
                     <div className="step-line"></div>
-                    <div className={`step ${currentStep >= 3 ? 'active' : ''}`}>
+                    <div className={`step ?{currentStep >= 3 ? 'active' : ''}`}>
                         <div className="step-number">3</div>
                         <span className="step-label">Credentials</span>
                     </div>
@@ -275,7 +333,7 @@ function PurchaseContent() {
                     <div className="plan-summary-divider"></div>
                     <div className="plan-summary-row total">
                         <span className="plan-label">Total</span>
-                        <span className="plan-value">${planPrice}</span>
+                        <span className="plan-value">?{planPrice}</span>
                     </div>
                 </div>
 
@@ -287,7 +345,7 @@ function PurchaseContent() {
 
                         <div className="platform-options">
                             <div
-                                className={`platform-card glass-card ${accountType === 'mt5' ? 'selected' : ''}`}
+                                className={`platform-card glass-card ?{accountType === 'mt5' ? 'selected' : ''}`}
                                 onClick={() => handleAccountSelect('mt5')}
                             >
                                 <div className="platform-icon">
@@ -313,7 +371,7 @@ function PurchaseContent() {
                         </div>
 
                         <button
-                            className={`btn btn-gradient btn-lg btn-block ${!accountType ? 'disabled' : ''}`}
+                            className={`btn btn-gradient btn-lg btn-block ?{!accountType ? 'disabled' : ''}`}
                             onClick={handleContinueToPayment}
                             disabled={!accountType}
                         >
@@ -397,12 +455,12 @@ function PurchaseContent() {
 
                             <div className="payment-total">
                                 <span>Amount to Pay:</span>
-                                <span className="total-amount">${planPrice}</span>
+                                <span className="total-amount">?{planPrice}</span>
                             </div>
 
                             <button
                                 type="submit"
-                                className={`btn btn-gradient btn-lg btn-block ${isProcessing ? 'processing' : ''}`}
+                                className={`btn btn-gradient btn-lg btn-block ?{isProcessing ? 'processing' : ''}`}
                                 disabled={isProcessing}
                             >
                                 {isProcessing ? (
@@ -412,13 +470,15 @@ function PurchaseContent() {
                                     </>
                                 ) : (
                                     <>
-                                        Pay ${planPrice}
+                                        Pay ?{planPrice}
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                         </svg>
                                     </>
                                 )}
                             </button>
+
+                            {mt5Error && <div className="auth-error" style={{ marginTop: '1rem' }}>{mt5Error}</div>}
 
                             <p className="payment-disclaimer">
                                 🔒 Your payment is secured with 256-bit SSL encryption
@@ -460,10 +520,10 @@ function PurchaseContent() {
                         <div className="credentials-card glass-card premium">
                             <div className="credentials-header">
                                 <div className="credentials-badge">
-                                    <span className="badge-icon">🏆</span>
-                                    <span className="badge-text">FUNDED ACCOUNT</span>
+                                    <span className="badge-icon">{credentials.isLive ? '🏆' : '🧪'}</span>
+                                    <span className="badge-text">{credentials.isLive ? 'LIVE ACCOUNT' : 'DEMO ACCOUNT'}</span>
                                 </div>
-                                <div className="account-type-badge">{credentials.accountType}</div>
+                                <div className="account-type-badge" style={credentials.isLive ? { background: 'linear-gradient(135deg, #00FF88, #00D9FF)' } : { background: 'linear-gradient(135deg, #ff9800, #ff5722)' }}>{credentials.accountType}</div>
                             </div>
 
                             <div className="credentials-info">
@@ -493,7 +553,7 @@ function PurchaseContent() {
                                 <div className="credential-value">
                                     <span>{credentials.server}</span>
                                     <button
-                                        className={`copy-btn ${copied === 'server' ? 'copied' : ''}`}
+                                        className={`copy-btn ?{copied === 'server' ? 'copied' : ''}`}
                                         onClick={() => handleCopy(credentials.server, 'server')}
                                     >
                                         {copied === 'server' ? '✓' : '📋'}
@@ -510,10 +570,10 @@ function PurchaseContent() {
                                     Login ID
                                 </div>
                                 <div className="credential-value">
-                                    <span className="highlight-text">{credentials.demoId}</span>
+                                    <span className="highlight-text">{credentials.loginId}</span>
                                     <button
-                                        className={`copy-btn ${copied === 'id' ? 'copied' : ''}`}
-                                        onClick={() => handleCopy(credentials.demoId, 'id')}
+                                        className={`copy-btn ?{copied === 'id' ? 'copied' : ''}`}
+                                        onClick={() => handleCopy(String(credentials.loginId), 'id')}
                                     >
                                         {copied === 'id' ? '✓' : '📋'}
                                     </button>
@@ -526,15 +586,34 @@ function PurchaseContent() {
                                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                                         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                                     </svg>
-                                    Password
+                                    Main Password
                                 </div>
                                 <div className="credential-value">
-                                    <span className="highlight-text">{credentials.password}</span>
+                                    <span className="highlight-text">{credentials.mainPassword}</span>
                                     <button
-                                        className={`copy-btn ${copied === 'password' ? 'copied' : ''}`}
-                                        onClick={() => handleCopy(credentials.password, 'password')}
+                                        className={`copy-btn ?{copied === 'mainPassword' ? 'copied' : ''}`}
+                                        onClick={() => handleCopy(credentials.mainPassword, 'mainPassword')}
                                     >
-                                        {copied === 'password' ? '✓' : '📋'}
+                                        {copied === 'mainPassword' ? '✓' : '📋'}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="credential-item">
+                                <div className="credential-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                    Investor Password
+                                </div>
+                                <div className="credential-value">
+                                    <span className="highlight-text">{credentials.investorPassword}</span>
+                                    <button
+                                        className={`copy-btn ?{copied === 'investorPassword' ? 'copied' : ''}`}
+                                        onClick={() => handleCopy(credentials.investorPassword, 'investorPassword')}
+                                    >
+                                        {copied === 'investorPassword' ? '✓' : '📋'}
                                     </button>
                                 </div>
                             </div>
@@ -591,19 +670,7 @@ function PurchaseLoadingSkeleton() {
             <div className="purchase-container">
                 <div className="purchase-header">
                     <div className="logo">
-                        <div className="logo-icon">
-                            <svg viewBox="0 0 40 40" fill="none">
-                                <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" strokeWidth="3" />
-                                <path d="M12 20L18 26L28 14" stroke="url(#logoGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                                <defs>
-                                    <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
-                                        <stop offset="0%" stopColor="#00D9FF" />
-                                        <stop offset="100%" stopColor="#7B61FF" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </div>
-                        <span className="logo-text">TradeFund<span className="logo-highlight">Pro</span></span>
+                        <span className="logo-text">Zero Fund<span className="logo-highlight">Pro</span></span>
                     </div>
                 </div>
                 <div className="purchase-loading">Loading...</div>

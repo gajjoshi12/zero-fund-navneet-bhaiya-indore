@@ -1,120 +1,75 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
+import api from '../lib/api';
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check for existing session on mount
-        const storedUser = localStorage.getItem('tradefund_user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
+        // Restore session from stored token
+        const token = localStorage.getItem('sr_token');
+        const storedUser = localStorage.getItem('sr_user');
+
+        if (token && storedUser) {
+            try {
+                const userData = JSON.parse(storedUser);
+                setUser(userData);
+            } catch {
+                localStorage.removeItem('sr_token');
+                localStorage.removeItem('sr_user');
+            }
         }
         setLoading(false);
     }, []);
 
-    const login = (email, password) => {
-        // Get users from localStorage
-        const users = JSON.parse(localStorage.getItem('tradefund_users') || '[]');
+    const login = async (email, password) => {
+        try {
+            const res = await api.post('/auth/login/', { email, password });
 
-        // Check for admin
-        if (email === 'admin@tradefund.com' && password === 'admin123') {
-            const adminUser = {
-                id: 'admin',
-                email: 'admin@tradefund.com',
-                name: 'Admin',
-                role: 'admin',
-                createdAt: new Date().toISOString()
-            };
-            setUser(adminUser);
-            localStorage.setItem('tradefund_user', JSON.stringify(adminUser));
-            return { success: true, user: adminUser };
+            if (res.status === 200) {
+                const { token, user: userData } = res.data;
+                localStorage.setItem('sr_token', token);
+                localStorage.setItem('sr_user', JSON.stringify(userData));
+                setUser(userData);
+                return { success: true, user: userData };
+            } else {
+                return { success: false, error: res.msg || 'Invalid credentials' };
+            }
+        } catch (err) {
+            return { success: false, error: 'Network error. Please try again.' };
         }
-
-        // Check for demo user
-        if (email === 'demo@tradefund.com' && password === 'demo123') {
-            const demoUser = {
-                id: 'demo',
-                email: 'demo@tradefund.com',
-                name: 'Demo User',
-                role: 'user',
-                balance: 0,
-                totalEarnings: 0,
-                createdAt: new Date().toISOString()
-            };
-            setUser(demoUser);
-            localStorage.setItem('tradefund_user', JSON.stringify(demoUser));
-            return { success: true, user: demoUser };
-        }
-
-        // Check registered users
-        const foundUser = users.find(u => u.email === email && u.password === password);
-        if (foundUser) {
-            const { password: _, ...userWithoutPassword } = foundUser;
-            setUser(userWithoutPassword);
-            localStorage.setItem('tradefund_user', JSON.stringify(userWithoutPassword));
-            return { success: true, user: userWithoutPassword };
-        }
-
-        return { success: false, error: 'Invalid email or password' };
     };
 
-    const signup = (name, email, password, phone) => {
-        const users = JSON.parse(localStorage.getItem('tradefund_users') || '[]');
+    const signup = async (name, email, password, phone, country) => {
+        try {
+            const res = await api.post('/auth/register/', { name, email, password, phone, country });
 
-        // Check if email already exists
-        if (users.find(u => u.email === email)) {
-            return { success: false, error: 'Email already registered' };
+            if (res.status === 200) {
+                const { token, user: userData } = res.data;
+                localStorage.setItem('sr_token', token);
+                localStorage.setItem('sr_user', JSON.stringify(userData));
+                setUser(userData);
+                return { success: true, user: userData };
+            } else {
+                return { success: false, error: res.msg || 'Registration failed' };
+            }
+        } catch (err) {
+            return { success: false, error: 'Network error. Please try again.' };
         }
-
-        const newUser = {
-            id: `user_${Date.now()}`,
-            name,
-            email,
-            password, // In real app, this should be hashed
-            phone,
-            role: 'user',
-            balance: 0,
-            totalEarnings: 0,
-            status: 'active',
-            createdAt: new Date().toISOString()
-        };
-
-        users.push(newUser);
-        localStorage.setItem('tradefund_users', JSON.stringify(users));
-
-        const { password: _, ...userWithoutPassword } = newUser;
-        setUser(userWithoutPassword);
-        localStorage.setItem('tradefund_user', JSON.stringify(userWithoutPassword));
-
-        return { success: true, user: userWithoutPassword };
     };
 
     const logout = () => {
+        localStorage.removeItem('sr_token');
+        localStorage.removeItem('sr_user');
         setUser(null);
-        localStorage.removeItem('tradefund_user');
-    };
-
-    const updateUser = (updates) => {
-        const updatedUser = { ...user, ...updates };
-        setUser(updatedUser);
-        localStorage.setItem('tradefund_user', JSON.stringify(updatedUser));
-
-        // Also update in users array
-        const users = JSON.parse(localStorage.getItem('tradefund_users') || '[]');
-        const index = users.findIndex(u => u.id === user.id);
-        if (index !== -1) {
-            users[index] = { ...users[index], ...updates };
-            localStorage.setItem('tradefund_users', JSON.stringify(users));
-        }
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, signup, logout, updateUser }}>
+        <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
             {children}
         </AuthContext.Provider>
     );

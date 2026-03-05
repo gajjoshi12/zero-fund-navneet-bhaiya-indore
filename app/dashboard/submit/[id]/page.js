@@ -1,21 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useState, useEffect, use } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../../../context/AuthContext';
-import { getAllAssignments, getAllTasks, createSubmission, updateAssignment } from '../../../lib/data';
+import { getUserAssignments, createSubmission } from '../../../lib/data';
 
-export default function SubmitProofPage() {
+export default function SubmitPage({ params }) {
+    const resolvedParams = use(params);
+    const assignmentId = resolvedParams.id;
+
     const { user, loading } = useAuth();
     const router = useRouter();
-    const params = useParams();
     const [assignment, setAssignment] = useState(null);
-    const [task, setTask] = useState(null);
     const [proofUrl, setProofUrl] = useState('');
     const [notes, setNotes] = useState('');
     const [submitting, setSubmitting] = useState(false);
-    const [previewImage, setPreviewImage] = useState(null);
+    const [submitted, setSubmitted] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         if (!loading && !user) {
@@ -24,125 +27,134 @@ export default function SubmitProofPage() {
     }, [user, loading, router]);
 
     useEffect(() => {
-        if (params.id) {
-            const assignments = getAllAssignments();
-            const found = assignments.find(a => a.id === params.id);
-            if (found) {
-                setAssignment(found);
-                const tasks = getAllTasks();
-                const foundTask = tasks.find(t => t.id === found.taskId);
-                setTask(foundTask);
-            }
+        if (user && assignmentId) {
+            loadAssignment();
         }
-    }, [params.id]);
+    }, [user, assignmentId]);
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreviewImage(reader.result);
-                setProofUrl(reader.result);
-            };
-            reader.readAsDataURL(file);
+    const loadAssignment = async () => {
+        try {
+            const assignments = await getUserAssignments();
+            const found = assignments.find(a => a.id === parseInt(assignmentId));
+            setAssignment(found || null);
+        } catch (err) {
+            console.error('Failed to load assignment:', err);
+        } finally {
+            setPageLoading(false);
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!proofUrl) {
-            alert('Please upload a screenshot or proof');
-            return;
-        }
-
         setSubmitting(true);
+        setError('');
 
-        // Update assignment to in_progress if pending
-        if (assignment.status === 'pending') {
-            updateAssignment(assignment.id, { status: 'in_progress' });
+        try {
+            await createSubmission(parseInt(assignmentId), proofUrl, notes);
+            setSubmitted(true);
+        } catch (err) {
+            setError('Failed to submit proof. Please try again.');
+        } finally {
+            setSubmitting(false);
         }
-
-        // Create submission
-        createSubmission(assignment.id, user.id, task.id, proofUrl, notes);
-
-        setSubmitting(false);
-        router.push('/dashboard');
     };
 
-    if (loading || !assignment || !task) {
+    if (loading || pageLoading) {
         return <div className="dashboard-loading">Loading...</div>;
     }
+
+    if (!user) return null;
+
+    if (submitted) {
+        return (
+            <div className="submit-page">
+                <div className="submit-container">
+                    <div className="submit-card glass-card success-card">
+                        <div className="success-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <polyline points="22,4 12,14.01 9,11.01" />
+                            </svg>
+                        </div>
+                        <h2>Proof Submitted!</h2>
+                        <p>Your submission has been sent for review. You&apos;ll be notified once an admin reviews it.</p>
+                        <Link href="/dashboard" className="btn btn-primary">Back to Dashboard</Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (!assignment) {
+        return (
+            <div className="submit-page">
+                <div className="submit-container">
+                    <div className="submit-card glass-card">
+                        <h2>Assignment Not Found</h2>
+                        <p>This assignment could not be found or does not belong to you.</p>
+                        <Link href="/dashboard" className="btn btn-primary">Back to Dashboard</Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const task = assignment.task;
 
     return (
         <div className="submit-page">
             <div className="submit-container">
-                <div className="submit-card glass-card">
-                    <div className="submit-header">
-                        <Link href="/dashboard" className="back-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M19 12H5M12 19l-7-7 7-7" />
-                            </svg>
-                            Back to Dashboard
-                        </Link>
-                        <h1>Submit Proof</h1>
-                    </div>
+                <div className="submit-header">
+                    <Link href="/dashboard" className="back-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <line x1="19" y1="12" x2="5" y2="12" />
+                            <polyline points="12,19 5,12 12,5" />
+                        </svg>
+                        Back to Dashboard
+                    </Link>
+                </div>
 
-                    <div className="task-info">
-                        <h2>{task.title}</h2>
-                        <p>{task.description}</p>
-                        <div className="task-meta">
-                            <span className="reward">Reward: ${task.reward.toLocaleString('en-US')}</span>
-                            <span className={`status ${assignment.status}`}>{assignment.status.replace('_', ' ')}</span>
+                <div className="submit-card glass-card">
+                    <div className="task-info-section">
+                        <h2>{task?.title || 'Task'}</h2>
+                        <p className="task-description">{task?.description || ''}</p>
+                        <div className="task-reward-badge">
+                            <span className="label">Reward:</span>
+                            <span className="value">${Number(task?.reward || 0).toLocaleString('en-US')}</span>
                         </div>
                     </div>
 
                     <form onSubmit={handleSubmit} className="submit-form">
+                        <h3>Submit Your Proof</h3>
+
+                        {error && <div className="auth-error">{error}</div>}
+
                         <div className="form-group">
-                            <label>Upload Screenshot / Proof</label>
-                            <div className="file-upload-area">
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleFileChange}
-                                    id="proof-upload"
-                                    className="file-input"
-                                />
-                                <label htmlFor="proof-upload" className="file-label">
-                                    {previewImage ? (
-                                        <img src={previewImage} alt="Preview" className="preview-image" />
-                                    ) : (
-                                        <div className="upload-placeholder">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                <polyline points="17,8 12,3 7,8" />
-                                                <line x1="12" y1="3" x2="12" y2="15" />
-                                            </svg>
-                                            <span>Click to upload or drag and drop</span>
-                                            <span className="hint">PNG, JPG, GIF up to 10MB</span>
-                                        </div>
-                                    )}
-                                </label>
-                            </div>
+                            <label htmlFor="proofUrl">Proof URL (Screenshot/Drive link)</label>
+                            <input
+                                type="url"
+                                id="proofUrl"
+                                value={proofUrl}
+                                onChange={(e) => setProofUrl(e.target.value)}
+                                placeholder="https://drive.google.com/... or image link"
+                                required
+                            />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="notes">Additional Notes (Optional)</label>
+                            <label htmlFor="notes">Additional Notes</label>
                             <textarea
                                 id="notes"
                                 value={notes}
                                 onChange={(e) => setNotes(e.target.value)}
-                                placeholder="Add any additional information about your submission..."
+                                placeholder="Describe what you did to complete this task..."
                                 rows={4}
                             />
                         </div>
 
-                        <div className="submit-actions">
-                            <Link href="/dashboard" className="btn btn-outline">Cancel</Link>
-                            <button type="submit" className="btn btn-primary" disabled={submitting}>
-                                {submitting ? 'Submitting...' : 'Submit Proof'}
-                            </button>
-                        </div>
+                        <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
+                            {submitting ? 'Submitting...' : 'Submit Proof'}
+                        </button>
                     </form>
                 </div>
             </div>
